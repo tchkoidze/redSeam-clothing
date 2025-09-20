@@ -4,6 +4,7 @@ import { fetchProduct } from "../APIs";
 import { useEffect, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { HiOutlineShoppingCart } from "react-icons/hi2";
+import { useParams } from "@tanstack/react-router";
 
 const colorClassMap: Record<string, string> = {
   Red: "bg-red-700",
@@ -41,10 +42,13 @@ export function Product() {
   });
   const [showQuantityDropdown, setShowQuantityDropdown] = useState(false);
 
+  const { productId } = useParams({ from: "/product/$productId" });
+  console.log("param", productId);
+
   const { data } = useQuery<Product>({
     // queryKey: ["products", page, priceFrom, priceTo, sort],
     queryKey: ["product"],
-    queryFn: () => fetchProduct(9), //{ page, priceFrom, priceTo, sort }
+    queryFn: () => fetchProduct(productId), //{ page, priceFrom, priceTo, sort }
     placeholderData: keepPreviousData,
   });
 

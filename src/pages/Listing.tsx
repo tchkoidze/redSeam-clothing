@@ -1,8 +1,4 @@
-import {
-  keepPreviousData,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../APIs";
 import type { PriceRange, ProductsApiResponse } from "../types";
 import { useState } from "react";
@@ -11,6 +7,7 @@ import productsLogo from "../assets/Products.png";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import PriceFilter from "../components/PriceFilter";
+import { Link } from "@tanstack/react-router";
 
 const sorts = [
   { label: "New products last", value: "created_at" },
@@ -20,8 +17,6 @@ const sorts = [
 ];
 
 export function Listing() {
-  const queryClient = useQueryClient();
-
   const [page, setPage] = useState<number>(1);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [showPricetDropdown, setShowPriceDropdown] = useState(false);
@@ -189,27 +184,7 @@ export function Listing() {
               <HiOutlineAdjustmentsHorizontal size={24} />
               Filter
             </button>
-            {/* <div className="absolute border border-[#E1DFE1] bg-white p-4">
-              <form action="">
-                <div className="flex gap-2.5">
-                  <div className="flex border border-[#E1DFE1]">
-                    <label htmlFor="" className="flex">
-                      From <span className="text-[#FF4000]">*</span>
-                    </label>
-                    <input type="text" />
-                  </div>
-                  <label htmlFor="" className="flex border border-[#E1DFE1]">
-                    to <span className="text-[#FF4000]">*</span>
-                    <input type="text" />
-                  </label>
-                </div>
-                <div className="flex justify-end">
-                  <button className="w-[124px] text-white bg-[#FF4000] py-2.5 rounded-lg">
-                    applay
-                  </button>
-                </div>
-              </form>
-            </div> */}
+
             {showPricetDropdown && (
               <PriceFilter
                 setShowPriceDropdown={setShowPriceDropdown}
@@ -249,10 +224,16 @@ export function Listing() {
         {data?.data?.map((product) => (
           <div key={product.id} className="">
             {/* <link> </link> */}
-            <img
-              src={product.cover_image}
-              className="w-[412px] h-[549px] shadow-md rounded-md"
-            />
+            <Link //to={`/product/${product.id}`}
+              to="/product/$productId"
+              params={{ productId: String(product.id) }}
+            >
+              <img
+                src={product.cover_image}
+                className="w-[412px] h-[549px] shadow-md rounded-md"
+              />
+            </Link>
+
             <p className="text-left">{product.name}</p>
             <p className="text-left">$ {product.price}</p>
           </div>

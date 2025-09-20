@@ -22,6 +22,7 @@ export const fetchProducts = async (
         },
       }
     );
+    console.log(page, priceRange, sort);
     console.log("prod: ", response);
     return response.data;
   } catch (error) {

@@ -1,14 +1,23 @@
 import axios from "axios";
+import type { PriceRange } from "./types";
 
-export const fetchProducts = async (page = 1, sort: string | undefined) => {
+export const fetchProducts = async (
+  page = 1,
+  priceRange: PriceRange,
+  sort: string | undefined
+) => {
   try {
     const response = await axios.get(
-      `https://api.redseam.redberryinternship.ge/api/products?page=${page}&filter[price_from]=100&filter[price_to]=500&sort=price`,
+      `https://api.redseam.redberryinternship.ge/api/products`, //?page=${page}&filter[price_from]=100&filter[price_to]=500&sort=price
       {
         params: {
-          //page,
-          "filter[price_from]": 100,
-          "filter[price_to]": 500,
+          page,
+          ...(priceRange?.from !== null
+            ? { "filter[price_from]": priceRange.from }
+            : {}),
+          ...(priceRange?.to !== null
+            ? { "filter[price_to]": priceRange.to }
+            : {}),
           ...(sort ? { sort } : {}),
         },
       }

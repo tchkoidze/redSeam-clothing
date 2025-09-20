@@ -4,7 +4,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { fetchProducts } from "../APIs";
-import type { ProductsApiResponse } from "../types";
+import type { PriceRange, ProductsApiResponse } from "../types";
 import { useState } from "react";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import productsLogo from "../assets/Products.png";
@@ -26,13 +26,16 @@ export function Listing() {
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [showPricetDropdown, setShowPriceDropdown] = useState(false);
   const [selectedSort, setSelectedSort] = useState<string>();
+  const [priceRange, setPriceRange] = useState<PriceRange>({
+    from: null,
+    to: null,
+  });
   // const [lastNonEmptyData, setLastNonEmptyData] =
   //   useState<ProductsApiResponse>(null);
 
   const { data, isFetching } = useQuery<ProductsApiResponse>({
-    // queryKey: ["products", page, priceFrom, priceTo, sort],
-    queryKey: ["products", page, selectedSort],
-    queryFn: () => fetchProducts(page, selectedSort), //{ page, priceFrom, priceTo, sort }
+    queryKey: ["products", page, priceRange, selectedSort],
+    queryFn: () => fetchProducts(page, priceRange, selectedSort),
     placeholderData: keepPreviousData,
   });
 
@@ -207,7 +210,12 @@ export function Listing() {
                 </div>
               </form>
             </div> */}
-            {showPricetDropdown && <PriceFilter />}
+            {showPricetDropdown && (
+              <PriceFilter
+                setShowPriceDropdown={setShowPriceDropdown}
+                setPriceRange={setPriceRange}
+              />
+            )}
           </div>
 
           <div className="relative">

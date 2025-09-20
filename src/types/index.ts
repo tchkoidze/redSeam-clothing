@@ -80,3 +80,8 @@ export interface PaginatedResponse<T> {
 
 // Concrete type for this response
 export type ProductsApiResponse = PaginatedResponse<ProductItem>;
+
+export type PriceRange = {
+  from: number | null;
+  to: number | null;
+};

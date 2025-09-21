@@ -4,7 +4,7 @@ import handEye from "/HandEye.png";
 
 export default function Header() {
   return (
-    <header className="flex justify-between px-[100px] py-5">
+    <header className="flex justify-between py-5">
       <div className="flex items-center gap-1">
         <img src={handEye} alt="hand_eye_logo" />
         <p>RedSeam Clothing</p>

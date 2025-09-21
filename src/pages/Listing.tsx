@@ -223,14 +223,13 @@ export function Listing() {
       <div className="grid grid-cols-4 gap-6  mt-8">
         {data?.data?.map((product) => (
           <div key={product.id} className="">
-            {/* <link> </link> */}
-            <Link //to={`/product/${product.id}`}
+            <Link
               to="/product/$productId"
               params={{ productId: String(product.id) }}
             >
               <img
                 src={product.cover_image}
-                className="w-[412px] h-[549px] shadow-md rounded-md"
+                className="w-[412px] h-[549px] border border-[#E1DFE1] rounded-lg"
               />
             </Link>
 

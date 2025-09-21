@@ -1,7 +1,7 @@
 // import { useState } from "react";
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
-// import "./App.css";
+import "./App.css";
 // import { Listing } from "./pages/Listing";
 // import { Product } from "./pages/Product";
 import { createRouter, RouterProvider } from "@tanstack/react-router";

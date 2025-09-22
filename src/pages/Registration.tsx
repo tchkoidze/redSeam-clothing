@@ -1,9 +1,48 @@
 import { Link } from "@tanstack/react-router";
 import heroImg from "/hero-img.png";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registrationSchema, type RegistrationFormData } from "./authSchema";
+import { registration } from "../APIs";
+import axios from "axios";
+import type { RegistrationErrorResponse } from "../types";
 
 export default function Registration() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [registerErrored, setRegisterErrored] =
+    useState<RegistrationErrorResponse | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(registrationSchema) });
+
+  const onSubmit = async (data: RegistrationFormData) => {
+    const formData = new FormData();
+
+    formData.append("email", data.email);
+    formData.append("username", data.userName);
+    formData.append("password", data.password);
+    formData.append("password_confirmation", data.confirmPassword);
+
+    console.log("form data: ", formData);
+
+    try {
+      const res = await registration(formData);
+
+      console.log("respo :", res);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("API error:", error.response?.data);
+        setRegisterErrored(error.response?.data);
+      } else {
+        console.log("Unexpected error:", error);
+      }
+    }
+  };
+
   return (
     <main className="grid grid-cols-2 items-center">
       <div>
@@ -11,7 +50,7 @@ export default function Registration() {
       </div>
       <div className="flex flex-col items-center">
         <h1 className="w-[554px] text-start mb-12">Registration</h1>
-        <form action="" className="w-[554px] space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-[554px] space-y-6">
           <div>
             <input
               type="file"
@@ -64,10 +103,20 @@ export default function Registration() {
               </span>
               <input
                 type="text"
-                // {...register("from")}
+                {...register("userName")}
                 className="w-full outline-none border-none bg-transparent"
               />
             </div>
+            {errors.userName && (
+              <p className="text-left text-[#FF4000]">
+                {errors.userName.message}
+              </p>
+            )}
+            {registerErrored?.errors.username && (
+              <p className="text-left text-[#FF4000]">
+                {registerErrored?.errors.username}
+              </p>
+            )}
           </div>
           <div>
             <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
@@ -76,13 +125,13 @@ export default function Registration() {
               </span>
               <input
                 type="text"
-                // {...register("from")}
+                {...register("email")}
                 className="w-full outline-none border-none bg-transparent"
               />
             </div>
-            {/* {errors.from && (
-              <p className="text-left text-[#FF4000]">{errors.from.message}</p>
-            )} */}
+            {errors.email && (
+              <p className="text-left text-[#FF4000]">{errors.email.message}</p>
+            )}
           </div>
           <div>
             <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
@@ -91,7 +140,7 @@ export default function Registration() {
               </span>
               <input
                 type="text"
-                // {...register("from")}
+                {...register("password")}
                 className="w-full outline-none border-none bg-transparent"
               />
               <svg
@@ -114,9 +163,11 @@ export default function Registration() {
                 />
               </svg>
             </div>
-            {/* {errors.from && (
-              <p className="text-left text-[#FF4000]">{errors.from.message}</p>
-            )} */}
+            {errors.password && (
+              <p className="text-left text-[#FF4000]">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -126,7 +177,7 @@ export default function Registration() {
               </span>
               <input
                 type="text"
-                // {...register("from")}
+                {...register("confirmPassword")}
                 className="w-full outline-none border-none bg-transparent"
               />
               <svg
@@ -149,9 +200,11 @@ export default function Registration() {
                 />
               </svg>
             </div>
-            {/* {errors.from && (
-              <p className="text-left text-[#FF4000]">{errors.from.message}</p>
-            )} */}
+            {errors.confirmPassword && (
+              <p className="text-left text-[#FF4000]">
+                {errors.confirmPassword.message}
+              </p>
+            )}
           </div>
           <div className="w-full pt-[22px]">
             <button className="w-full bg-[#FF4000] text-white px-8 py-2 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">

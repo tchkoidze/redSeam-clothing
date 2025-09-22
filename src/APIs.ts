@@ -41,3 +41,22 @@ export const fetchProduct = async (id = 2) => {
     console.error("Error fetching products:", error);
   }
 };
+
+export const registration = async (formData: any) => {
+  try {
+    const response = await axios.post(
+      `https://api.redseam.redberryinternship.ge/api/register`,
+      formData
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${apiToken}`,
+      //   },
+      // }
+    );
+    console.log("prodact: ", response);
+    return response;
+  } catch (error) {
+    //console.error("Error registering:", error);
+    throw error;
+  }
+};

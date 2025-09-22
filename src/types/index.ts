@@ -85,3 +85,13 @@ export type PriceRange = {
   from: number | null;
   to: number | null;
 };
+
+export type RegistrationErrorResponse = {
+  message: string;
+  errors: {
+    username?: string[];
+    email?: string[];
+    password?: string[];
+    [key: string]: string[] | undefined;
+  };
+};

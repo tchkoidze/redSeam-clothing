@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import heroImg from "/hero-img.png";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -19,6 +19,8 @@ export default function Registration() {
     formState: { errors },
   } = useForm({ resolver: zodResolver(registrationSchema) });
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data: RegistrationFormData) => {
     const formData = new FormData();
 
@@ -31,7 +33,7 @@ export default function Registration() {
 
     try {
       const res = await registration(formData);
-
+      navigate({ to: "/login" });
       console.log("respo :", res);
     } catch (error) {
       if (axios.isAxiosError(error)) {

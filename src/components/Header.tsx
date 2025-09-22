@@ -1,8 +1,18 @@
 import { HiMiniUser, HiShoppingCart } from "react-icons/hi2";
 import { RiArrowDownSLine } from "react-icons/ri";
 import handEye from "/HandEye.png";
+import { useState } from "react";
+import type { User } from "../types";
+import { useAuth } from "../AuthContext";
 
 export default function Header() {
+  // const [user, setUser] = useState<User | null>(() => {
+  //   const stored = localStorage.getItem("user");
+  //   return stored ? JSON.parse(stored) : null;
+  // });
+
+  const { user, token } = useAuth();
+
   return (
     <header className="flex justify-between py-5">
       <div className="flex items-center gap-1">
@@ -10,19 +20,30 @@ export default function Header() {
         <p>RedSeam Clothing</p>
       </div>
 
-      <div className="flex items-center gap-5">
-        <button className="cursor-pointer">
-          <HiShoppingCart size={24} />
-        </button>
+      {token ? (
+        <div className="flex items-center gap-5">
+          <button className="cursor-pointer">
+            <HiShoppingCart size={24} />
+          </button>
 
-        {/* <p className="w-10 h-10 flex justify-center items-center bg-red-300 text-white text-center text rounded-full my-auto">
+          {/* <p className="w-10 h-10 flex justify-center items-center bg-red-300 text-white text-center text rounded-full my-auto">
           <span> K</span>
         </p> */}
-        <button className="flex items-center gap-1 cursor-pointer">
+          <button className="flex items-center gap-1 cursor-pointer">
+            {user?.avatar ? (
+              <img src={user.avatar} alt="avatar" />
+            ) : (
+              <HiMiniUser size={40} />
+            )}
+
+            <RiArrowDownSLine size={20} />
+          </button>
+        </div>
+      ) : (
+        <button>
           <HiMiniUser size={40} />
-          <RiArrowDownSLine size={20} />
         </button>
-      </div>
+      )}
     </header>
   );
 }

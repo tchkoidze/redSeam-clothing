@@ -1,7 +1,49 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import heroImg from "/hero-img.png";
+import { loginSchema, type loginFormData } from "./authSchema";
+import { logIn } from "../APIs";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { LoginResponse } from "../types";
+import { useAuth } from "../AuthContext";
 
 export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(loginSchema) });
+
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: loginFormData) => {
+    const formData = new FormData();
+
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    console.log("form data: ", formData);
+
+    try {
+      const response: LoginResponse = await logIn(formData);
+
+      localStorage.setItem("auth_token", response.token);
+      localStorage.setItem("user_profile", JSON.stringify(response.user));
+      setAuth(response.user, response.token);
+      navigate({ to: "/listing" });
+
+      console.log("respo :", response);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("API error:", error.response?.data);
+      } else {
+        console.log("Unexpected error:", error);
+      }
+    }
+  };
+
   return (
     <main className="grid grid-cols-2 items-center">
       <div>
@@ -9,7 +51,7 @@ export default function Login() {
       </div>
       <div className="flex flex-col items-center">
         <h1 className="w-[554px] text-start mb-12">Log in</h1>
-        <form action="" className="w-[554px] space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-[554px] space-y-6">
           <div>
             <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
               <span className="flex gap-1 mr-2">
@@ -17,13 +59,13 @@ export default function Login() {
               </span>
               <input
                 type="text"
-                // {...register("from")}
+                {...register("email")}
                 className="w-full outline-none border-none bg-transparent"
               />
             </div>
-            {/* {errors.from && (
-              <p className="text-left text-[#FF4000]">{errors.from.message}</p>
-            )} */}
+            {errors.email && (
+              <p className="text-left text-[#FF4000]">{errors.email.message}</p>
+            )}
           </div>
           <div>
             <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
@@ -32,7 +74,7 @@ export default function Login() {
               </span>
               <input
                 type="text"
-                // {...register("from")}
+                {...register("password")}
                 className="w-full outline-none border-none bg-transparent"
               />
               <svg
@@ -55,9 +97,11 @@ export default function Login() {
                 />
               </svg>
             </div>
-            {/* {errors.from && (
-              <p className="text-left text-[#FF4000]">{errors.from.message}</p>
-            )} */}
+            {errors.password && (
+              <p className="text-left text-[#FF4000]">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <div className="w-full pt-[22px]">
             <button className="w-full bg-[#FF4000] text-white px-8 py-2 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">

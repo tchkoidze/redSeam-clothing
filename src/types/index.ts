@@ -95,3 +95,17 @@ export type RegistrationErrorResponse = {
     [key: string]: string[] | undefined;
   };
 };
+
+export type User = {
+  id: number;
+  username: string;
+  email: string;
+  is_admin: number;
+  remember_token: string | null;
+  avatar: string | null;
+};
+
+export type LoginResponse = {
+  user: User;
+  token: string;
+};

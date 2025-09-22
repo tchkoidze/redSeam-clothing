@@ -60,3 +60,12 @@ export const registration = async (formData: any) => {
     throw error;
   }
 };
+
+export const logIn = async (formData: any) => {
+  const response = await axios.post(
+    `https://api.redseam.redberryinternship.ge/api/login`,
+    formData
+  );
+  console.log("prodact: ", response.data);
+  return response.data;
+};

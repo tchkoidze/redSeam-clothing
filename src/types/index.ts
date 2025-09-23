@@ -116,3 +116,19 @@ export type AuthContextType = {
   setAuth: (user: User, token: string) => void;
   logout: () => void;
 };
+
+export type CartProduct = {
+  id: number;
+  name: string;
+  description: string | null;
+  release_year: string;
+  cover_image: string;
+  images: string[];
+  price: number;
+  available_colors: string[];
+  available_sizes: string[];
+  total_price: number;
+  quantity: number;
+  color: string;
+  size: string;
+};

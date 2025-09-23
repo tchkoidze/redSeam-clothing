@@ -69,3 +69,44 @@ export const logIn = async (formData: any) => {
   console.log("prodact: ", response.data);
   return response.data;
 };
+
+export const fetchCartProducts = async (apiToken: string) => {
+  try {
+    const response = await axios.get(
+      `https://api.redseam.redberryinternship.ge/api/cart`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+        },
+      }
+    );
+    console.log("prodact: ", response);
+    return response.data;
+  } catch (error) {
+    //console.error("Error registering:", error);
+    throw error;
+  }
+};
+
+export const deleteCartProduct = async (
+  apiToken: string,
+  ProductId: number
+) => {
+  try {
+    const response = await axios.delete(
+      `https://api.redseam.redberryinternship.ge/api/cart/products/${ProductId}`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+        },
+      }
+    );
+    console.log("prodact: ", response);
+    return response.data;
+  } catch (error) {
+    //console.error("Error registering:", error);
+    throw error;
+  }
+};

@@ -222,7 +222,7 @@ export default function Registration() {
         <div className="flex items-center text-sm gap-2 mt-6">
           <p>Already member?</p>
           <Link
-            to={"/"}
+            to={"/login"}
             className="poppins-medium text-[#FF4000] hover:underline"
           >
             Log in

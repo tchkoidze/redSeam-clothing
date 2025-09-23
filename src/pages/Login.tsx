@@ -114,7 +114,7 @@ export default function Login() {
         <div className="flex items-center gap-2 text-sm  mt-6">
           <p>Not a member?</p>
           <Link
-            to={"/"}
+            to={"/registration"}
             className="poppins-medium text-[#FF4000] hover:underline"
           >
             Register

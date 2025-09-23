@@ -4,6 +4,7 @@ import handEye from "/HandEye.png";
 import { useState } from "react";
 import type { User } from "../types";
 import { useAuth } from "../AuthContext";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function Header({
   close,
@@ -15,6 +16,7 @@ export default function Header({
   //   return stored ? JSON.parse(stored) : null;
   // });
 
+  const navigate = useNavigate();
   const { user, token } = useAuth();
 
   const handleOpenCart = () => {
@@ -54,7 +56,12 @@ export default function Header({
           </button>
         </div>
       ) : (
-        <button className="flex items-center gap-2 text-[#10151F]">
+        <button
+          onClick={() => {
+            navigate({ to: "/login" }); // your login route
+          }}
+          className="flex items-center gap-2 text-[#10151F]"
+        >
           <HiMiniUser size={20} />
           <span className="poppins-medium text-xs">Log in</span>
         </button>

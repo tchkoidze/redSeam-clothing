@@ -51,8 +51,13 @@ export default function Registration() {
         <img src={heroImg} alt="loging_hero_img" />
       </div>
       <div className="flex flex-col items-center">
-        <h1 className="w-[554px] text-start mb-12">Registration</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="w-[554px] space-y-6">
+        <p className="w-[554px] poppins-semibold text-[42px] leading-[63px] text-[#10151F] text-start mb-12">
+          Registration
+        </p>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-[554px] text-sm space-y-6"
+        >
           <div>
             <input
               type="file"
@@ -99,7 +104,7 @@ export default function Registration() {
             </div>
           </div>
           <div>
-            <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
+            <div className="flex items-center border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">
               <span className="flex gap-1 mr-2">
                 Username <span className="text-red-500">*</span>
               </span>
@@ -121,7 +126,7 @@ export default function Registration() {
             )}
           </div>
           <div>
-            <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
+            <div className="flex items-center border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">
               <span className="flex gap-1 mr-2">
                 Email <span className="text-red-500">*</span>
               </span>
@@ -136,7 +141,7 @@ export default function Registration() {
             )}
           </div>
           <div>
-            <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
+            <div className="flex items-center border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">
               <span className="flex gap-1 mr-2">
                 Password <span className="text-red-500">*</span>
               </span>
@@ -173,7 +178,7 @@ export default function Registration() {
           </div>
 
           <div>
-            <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
+            <div className="flex items-center border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">
               <span className="flex gap-1 mr-2 shrink-0">
                 Confirm password <span className="text-red-500">*</span>
               </span>
@@ -209,14 +214,17 @@ export default function Registration() {
             )}
           </div>
           <div className="w-full pt-[22px]">
-            <button className="w-full bg-[#FF4000] text-white px-8 py-2 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">
-              Log in
+            <button className="w-full bg-[#FF4000] text-sm text-white px-8 py-2 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">
+              Register
             </button>
           </div>
         </form>
-        <div className="flex items-center gap-2 mt-6">
+        <div className="flex items-center text-sm gap-2 mt-6">
           <p>Already member?</p>
-          <Link to={"/"} className="text-[#FF4000] hover:underline">
+          <Link
+            to={"/"}
+            className="poppins-medium text-[#FF4000] hover:underline"
+          >
             Log in
           </Link>
         </div>

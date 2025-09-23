@@ -47,7 +47,7 @@ export default function PriceFilter({
       onSubmit={handleSubmit(onSubmit)}
       className="absolute -right-5 w-[392px] border border-[#E1DFE1] rounded-lg p-4 bg-white"
     >
-      <h3 className="text-left text-lg mb-5">Select price</h3>
+      <h3 className="poppins-semibold text-left mb-5">Select price</h3>
       <div className="grid grid-cols-2 gap-2.5">
         <div>
           <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
@@ -83,7 +83,7 @@ export default function PriceFilter({
       </div>
 
       <div className="flex justify-end mt-2.5">
-        <button className="bg-[#FF4000] text-white px-8 py-2 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">
+        <button className="bg-[#FF4000] text-sm text-white px-8 py-2 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">
           Apply
         </button>
       </div>

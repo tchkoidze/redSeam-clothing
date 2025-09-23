@@ -50,10 +50,12 @@ export default function Login() {
         <img src={heroImg} alt="loging_hero_img" />
       </div>
       <div className="flex flex-col items-center">
-        <h1 className="w-[554px] text-start mb-12">Log in</h1>
+        <p className="w-[554px] poppins-semibold text-[42px] leading-[63px] text-[#10151F] text-start mb-12">
+          Log in
+        </p>
         <form onSubmit={handleSubmit(onSubmit)} className="w-[554px] space-y-6">
           <div>
-            <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
+            <div className="flex items-center text-sm border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">
               <span className="flex gap-1 mr-2">
                 Email <span className="text-red-500">*</span>
               </span>
@@ -68,7 +70,7 @@ export default function Login() {
             )}
           </div>
           <div>
-            <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600">
+            <div className="flex items-center text-sm border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">
               <span className="flex gap-1 mr-2">
                 Password <span className="text-red-500">*</span>
               </span>
@@ -104,14 +106,17 @@ export default function Login() {
             )}
           </div>
           <div className="w-full pt-[22px]">
-            <button className="w-full bg-[#FF4000] text-white px-8 py-2 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">
+            <button className="w-full bg-[#FF4000] text-white text-sm px-8 py-2.5 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">
               Log in
             </button>
           </div>
         </form>
-        <div className="flex items-center gap-2 mt-6">
+        <div className="flex items-center gap-2 text-sm  mt-6">
           <p>Not a member?</p>
-          <Link to={"/"} className="text-[#FF4000] hover:underline">
+          <Link
+            to={"/"}
+            className="poppins-medium text-[#FF4000] hover:underline"
+          >
             Register
           </Link>
         </div>

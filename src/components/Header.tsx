@@ -17,7 +17,9 @@ export default function Header() {
     <header className="flex justify-between py-5">
       <div className="flex items-center gap-1">
         <img src={handEye} alt="hand_eye_logo" />
-        <p>RedSeam Clothing</p>
+        <p className="poppins-semibold text-base text-[#10151F]">
+          RedSeam Clothing
+        </p>
       </div>
 
       {token ? (
@@ -40,8 +42,9 @@ export default function Header() {
           </button>
         </div>
       ) : (
-        <button>
-          <HiMiniUser size={40} />
+        <button className="flex items-center gap-2 text-[#10151F]">
+          <HiMiniUser size={20} />
+          <span className="poppins-medium text-xs">Log in</span>
         </button>
       )}
     </header>

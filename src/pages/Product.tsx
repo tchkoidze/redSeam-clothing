@@ -61,7 +61,9 @@ export function Product() {
   }, [data]);
   return (
     <main className="w-fit">
-      <p className="text-left mb-[49px]">listing / product</p>
+      <p className="poppins-light text-sm text-left mb-[49px]">
+        listing / product
+      </p>
       <div className="flex gap-[168px]">
         <div className="w-[848px] flex gap-6">
           <div className="w-[121px] space-y-2.5 shrink-0">
@@ -89,7 +91,7 @@ export function Product() {
           />
         </div>
         <div className="flex-none w-[704px] space-y-14">
-          <div className="text-left">
+          <div className="poppins-semibold text-[32px]  text-left">
             <h3 className="mb-[21px]">{data?.name}</h3>
             <p>${data?.price}</p>
           </div>
@@ -118,7 +120,7 @@ export function Product() {
             </div>
 
             <div>
-              <p className="text-left mb-4">Size:{selections.size} </p>
+              <p className="text-left mb-4">Size: {selections.size} </p>
               <div className="flex gap-2">
                 {data?.available_sizes?.map((size) => (
                   <div
@@ -174,14 +176,14 @@ export function Product() {
               </div>
             </div>
           </div>
-          <button className="w-full flex items-center justify-center text-white bg-[#FF4000] py-4 rounded-lg">
+          <button className="w-full flex items-center justify-center gap-2.5 poppins-medium text-lg leading-[27px] text-white bg-[#FF4000] py-4 rounded-lg">
             <HiOutlineShoppingCart /> Add to cart
           </button>
           <div className="w-full h-[1px] bg-[#E1DFE1]"></div>
 
           <div>
             <div className="flex justify-between items-center">
-              <h3>Details</h3>{" "}
+              <h3 className="poppins-medium text-xl text-[#10151F]">Details</h3>{" "}
               <img
                 src={data?.brand.image}
                 alt={data?.brand.name}

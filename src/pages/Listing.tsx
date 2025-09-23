@@ -178,7 +178,9 @@ export function Listing() {
     <main>
       <div>
         <div className="flex justify-between">
-          <img src={productsLogo} alt="logo" />
+          <p className="poppins-semibold text-[42px] leading-[63px] text-[#10151F]">
+            Products
+          </p>
           <div className="flex items-center gap-8">
             <p>
               Showing {data?.meta.from}-{data?.meta.to} of 100 results
@@ -263,7 +265,7 @@ export function Listing() {
       </div>
       <div className="grid grid-cols-4 gap-6  mt-8">
         {data?.data?.map((product) => (
-          <div key={product.id} className="">
+          <div key={product.id} className="poppins-medium text-lg">
             <Link
               to="/product/$productId"
               params={{ productId: String(product.id) }}
@@ -274,8 +276,8 @@ export function Listing() {
               />
             </Link>
 
-            <p className="text-left">{product.name}</p>
-            <p className="text-left">$ {product.price}</p>
+            <p className="text-left mt-3 mb-0.5">{product.name}</p>
+            <p className="text-left text-base">$ {product.price}</p>
           </div>
         ))}
       </div>

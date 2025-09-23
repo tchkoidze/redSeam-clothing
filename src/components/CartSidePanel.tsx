@@ -81,7 +81,12 @@ export default function CartSidePanel({
             <p className="text-sm text-[#3E424A] mt-6 mb-2.5">
               You've got nothing in your cart just yet...
             </p>
-            <button className="w-[214px] bg-[#FF4000] text-sm text-white px-8 py-4 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer mt-[81px]">
+            <button
+              onClick={() => {
+                close(false);
+              }}
+              className="w-[214px] bg-[#FF4000] text-sm text-white px-8 py-4 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer mt-[81px]"
+            >
               Start shopping
             </button>
           </div>

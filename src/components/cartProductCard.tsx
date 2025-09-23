@@ -3,6 +3,7 @@ import type { CartProduct } from "../types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCartProduct, updateCartProduct } from "../APIs";
 import { useAuth } from "../AuthContext";
+import { toTitleCase } from "../utils/format";
 
 export default function CartProductCard({ product }: { product: CartProduct }) {
   const { token } = useAuth(); // get token from your auth context
@@ -63,10 +64,10 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
       />
       <div className="w-full">
         <p className="flex justify-between poppins-medium text-sm">
-          <span>{product.name}</span>
+          <span>{toTitleCase(product.name)}</span>
           <span className="text-lg">${product.price}</span>
         </p>
-        <p className="text-left text-xs mt-2">{product.color}</p>
+        <p className="text-left text-xs capitalize mt-2">{product.color}</p>
         <p className="text-left text-xs mt-2">{product.size}</p>
         <div className="flex justify-between mt-[13px]">
           <div className="flex items-center gap-[2px] border border-[#E1DFE1] px-2 py-1 rounded-3xl">

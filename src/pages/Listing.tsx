@@ -10,6 +10,7 @@ import PriceFilter from "../components/PriceFilter";
 import { Link } from "@tanstack/react-router";
 import { useProductFilterDropdown } from "../hooks/useProductFilterDropDoen";
 import { IoMdClose } from "react-icons/io";
+import { toTitleCase } from "../utils/format";
 
 const sorts = [
   { label: "New products last", value: "created_at" },
@@ -278,7 +279,7 @@ export function Listing() {
               />
             </Link>
 
-            <p className="text-left mt-3 mb-0.5">{product.name}</p>
+            <p className="text-left mt-3 mb-0.5">{toTitleCase(product.name)}</p>
             <p className="text-left text-base">$ {product.price}</p>
           </div>
         ))}

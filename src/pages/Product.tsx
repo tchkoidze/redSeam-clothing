@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { HiOutlineShoppingCart } from "react-icons/hi2";
 import { useParams } from "@tanstack/react-router";
+import { toTitleCase } from "../utils/format";
 
 const colorClassMap: Record<string, string> = {
   Red: "bg-red-700",
@@ -92,7 +93,7 @@ export function Product() {
         </div>
         <div className="flex-none w-[704px] space-y-14">
           <div className="poppins-semibold text-[32px]  text-left">
-            <h3 className="mb-[21px]">{data?.name}</h3>
+            <h3 className="mb-[21px]">{toTitleCase(data?.name || "")}</h3>
             <p>${data?.price}</p>
           </div>
 

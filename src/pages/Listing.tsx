@@ -227,7 +227,9 @@ export function Listing() {
               {/* {showSortDropdown &&  */}
               {sortDropdown.isOpen && (
                 <ul className="w-[223px] absolute right-0 text-left border border-[#E1DFE1] rounded-lg py-4 bg-white">
-                  <p className="px-4 py-2">Sort by</p>
+                  <p className="poppins-semibold text-[#10151F] px-4 py-2">
+                    Sort by
+                  </p>
                   {sorts.map((sort) => (
                     <li
                       key={sort.label}

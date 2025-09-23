@@ -5,13 +5,25 @@ import { useState } from "react";
 import type { User } from "../types";
 import { useAuth } from "../AuthContext";
 
-export default function Header() {
+export default function Header({
+  close,
+}: {
+  close: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   // const [user, setUser] = useState<User | null>(() => {
   //   const stored = localStorage.getItem("user");
   //   return stored ? JSON.parse(stored) : null;
   // });
 
   const { user, token } = useAuth();
+
+  const handleOpenCart = () => {
+    if (!token) {
+      alert("You need to log in first!");
+      return;
+    }
+    close(true);
+  };
 
   return (
     <header className="flex justify-between py-5">
@@ -24,7 +36,7 @@ export default function Header() {
 
       {token ? (
         <div className="flex items-center gap-5">
-          <button className="cursor-pointer">
+          <button onClick={handleOpenCart} className="cursor-pointer">
             <HiShoppingCart size={24} />
           </button>
 

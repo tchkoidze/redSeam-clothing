@@ -6,6 +6,7 @@ import { fetchCartProducts } from "../APIs";
 import { useAuth } from "../AuthContext";
 import type { CartProduct } from "../types";
 import { da } from "zod/v4/locales";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function CartSidePanel({
   close,
@@ -13,7 +14,8 @@ export default function CartSidePanel({
   close: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { token } = useAuth();
-  console.log("token", token);
+  const navigate = useNavigate();
+
   const { data } = useQuery<CartProduct[]>({
     queryKey: ["cartProducts"],
     queryFn: () => fetchCartProducts(token!),
@@ -59,7 +61,13 @@ export default function CartSidePanel({
               <p className="flex justify-between text-xl">
                 Total <span>${total}</span>
               </p>
-              <button className="w-full bg-[#FF4000] text-sm text-white px-8 py-4 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer mt-[81px]">
+              <button
+                onClick={() => {
+                  close(false);
+                  navigate({ to: "/order" });
+                }}
+                className="w-full bg-[#FF4000] text-sm text-white px-8 py-4 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer mt-[81px]"
+              >
                 Go to checkout
               </button>
             </div>

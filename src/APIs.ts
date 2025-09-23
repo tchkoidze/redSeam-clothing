@@ -110,3 +110,30 @@ export const deleteCartProduct = async (
     throw error;
   }
 };
+
+export const updateCartProduct = async (
+  apiToken: string,
+  ProductId: number,
+  quantity: number
+) => {
+  try {
+    const response = await axios.patch(
+      `https://api.redseam.redberryinternship.ge/api/cart/products/${ProductId}`,
+
+      {
+        quantity,
+      },
+
+      {
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+        },
+      }
+    );
+    console.log("prodact: ", response);
+    return response.data;
+  } catch (error) {
+    //console.error("Error registering:", error);
+    throw error;
+  }
+};

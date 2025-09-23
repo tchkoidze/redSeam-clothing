@@ -58,7 +58,7 @@ export default function Header({
       ) : (
         <button
           onClick={() => {
-            navigate({ to: "/login" }); // your login route
+            navigate({ to: "/login" });
           }}
           className="flex items-center gap-2 text-[#10151F]"
         >

@@ -1,7 +1,13 @@
 import { HiOutlineEnvelope } from "react-icons/hi2";
 import CartProductCard from "../components/cartProductCard";
+import { useAuth } from "../AuthContext";
+import { useGetCartProducts } from "../hooks/useCartProducts";
 
 export default function Order() {
+  const { token } = useAuth();
+  //const navigate = useNavigate();
+
+  const { data: cartProducts } = useGetCartProducts(token);
   return (
     <main className="w-[1920px]">
       <h1 className="text-left">Checkout</h1>
@@ -97,7 +103,11 @@ export default function Order() {
 
         {/* Order's right part */}
         <div className="w-[460px]">
-          <CartProductCard />
+          <div className="space-y-8 overflow-y-hidden">
+            {cartProducts?.map((product) => (
+              <CartProductCard product={product} />
+            ))}
+          </div>
           <div className="text-base space-y-4 my-[81px]">
             <p className="flex justify-between">
               Items subtotal <span>$50</span>
@@ -110,7 +120,7 @@ export default function Order() {
             </p>
           </div>
           <button className="w-full bg-[#FF4000] text-white px-8 py-4 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">
-            Order
+            Pay
           </button>
         </div>
       </div>

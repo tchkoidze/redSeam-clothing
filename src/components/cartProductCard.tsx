@@ -1,7 +1,7 @@
 import { FiMinus, FiPlus } from "react-icons/fi";
 import type { CartProduct } from "../types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCartProduct } from "../APIs";
+import { deleteCartProduct, updateCartProduct } from "../APIs";
 import { useAuth } from "../AuthContext";
 
 export default function CartProductCard({ product }: { product: CartProduct }) {
@@ -18,6 +18,42 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
       queryClient.invalidateQueries({ queryKey: ["cartProducts"] });
     },
   });
+
+  const updateProductMutation = useMutation({
+    mutationFn: ({
+      productId,
+      quantity,
+    }: {
+      productId: number;
+      quantity: number;
+    }) => {
+      if (!token) throw new Error("User not authenticated");
+      return updateCartProduct(token, productId, quantity);
+    },
+    onSuccess: () => {
+      // refetch cart after deletion
+      queryClient.invalidateQueries({ queryKey: ["cartProducts"] });
+    },
+  });
+
+  const handleDecrease = () => {
+    if (product.quantity > 1) {
+      updateProductMutation.mutate({
+        productId: product.id,
+        quantity: product.quantity - 1,
+      });
+    }
+  };
+
+  const handleIncrease = () => {
+    if (product.quantity < 10) {
+      updateProductMutation.mutate({
+        productId: product.id,
+        quantity: product.quantity + 1,
+      });
+    }
+  };
+
   return (
     <div key={product.id} className="flex items-center gap-4">
       <img
@@ -34,13 +70,19 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
         <p className="text-left text-xs mt-2">{product.size}</p>
         <div className="flex justify-between mt-[13px]">
           <div className="flex items-center gap-[2px] border border-[#E1DFE1] px-2 py-1 rounded-3xl">
-            <button>
+            <button
+              className={`${product.quantity === 1 ? "text-[#E1DFE1]" : "text-[#3E424A]"} cursor-pointer`}
+              onClick={handleDecrease}
+            >
               <FiMinus />
             </button>
             <span className=" w-[18px] h-[18px] flex justify-center items-center">
               {product.quantity}
             </span>
-            <button>
+            <button
+              className={`${product.quantity === 10 ? "text-[#E1DFE1]" : "text-[#3E424A]"} cursor-pointer`}
+              onClick={handleIncrease}
+            >
               <FiPlus />
             </button>
           </div>

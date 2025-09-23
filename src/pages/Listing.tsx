@@ -8,6 +8,8 @@ import { RiArrowDownSLine } from "react-icons/ri";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import PriceFilter from "../components/PriceFilter";
 import { Link } from "@tanstack/react-router";
+import { useProductFilterDropdown } from "../hooks/useProductFilterDropDoen";
+import { IoMdClose } from "react-icons/io";
 
 const sorts = [
   { label: "New products last", value: "created_at" },
@@ -20,6 +22,8 @@ export function Listing() {
   const [page, setPage] = useState<number>(1);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [showPricetDropdown, setShowPriceDropdown] = useState(false);
+  const sortDropdown = useProductFilterDropdown<HTMLDivElement>();
+  const priceDropdown = useProductFilterDropdown<HTMLDivElement>();
   const [selectedSort, setSelectedSort] = useState<string>();
   const [priceRange, setPriceRange] = useState<PriceRange>({
     from: null,
@@ -27,6 +31,7 @@ export function Listing() {
   });
   // const [lastNonEmptyData, setLastNonEmptyData] =
   //   useState<ProductsApiResponse>(null);
+  console.log("priceRange:", priceRange, "selectedSort:", selectedSort);
 
   const { data, isFetching } = useQuery<ProductsApiResponse>({
     queryKey: ["products", page, priceRange, selectedSort],
@@ -171,54 +176,90 @@ export function Listing() {
 
   return (
     <main>
-      <div className="flex justify-between">
-        <img src={productsLogo} alt="logo" />
-        <div className="flex items-center gap-8">
-          <p>Showing 1–10 of 100 results</p>
-          <span className="w-[1px] h-[14px] bg-[#E1DFE1]"></span>
-          <div className="relative">
-            <button
-              className="flex items-center gap-2 cursor-pointer"
-              onClick={() => setShowPriceDropdown((prev) => !prev)}
-            >
-              <HiOutlineAdjustmentsHorizontal size={24} />
-              Filter
-            </button>
+      <div>
+        <div className="flex justify-between">
+          <img src={productsLogo} alt="logo" />
+          <div className="flex items-center gap-8">
+            <p>
+              Showing {data?.meta.from}-{data?.meta.to} of 100 results
+            </p>
+            <span className="w-[1px] h-[14px] bg-[#E1DFE1]"></span>
+            <div className="relative" ref={priceDropdown.ref}>
+              <button
+                className="flex items-center gap-2 cursor-pointer"
+                onClick={() => {
+                  priceDropdown.setIsOpen((prev) => !prev);
+                  sortDropdown.setIsOpen(false);
+                }}
+              >
+                <HiOutlineAdjustmentsHorizontal size={24} />
+                Filter
+              </button>
 
-            {showPricetDropdown && (
-              <PriceFilter
-                setShowPriceDropdown={setShowPriceDropdown}
-                setPriceRange={setPriceRange}
-              />
-            )}
-          </div>
+              {/* {showPricetDropdown && ( */}
+              {priceDropdown.isOpen && (
+                <PriceFilter
+                  // setShowPriceDropdown={setShowPriceDropdown}
+                  setShowPriceDropdown={priceDropdown.setIsOpen}
+                  setPriceRange={setPriceRange}
+                />
+              )}
+            </div>
 
-          <div className="relative">
-            <button
-              className="flex items-center gap-2 cursor-pointer"
-              onClick={() => setShowSortDropdown((prev) => !prev)}
-            >
-              Sort by <RiArrowDownSLine size={20} />
-            </button>
-            {showSortDropdown && (
-              <ul className="w-[223px] absolute right-0 text-left border border-[#E1DFE1] rounded-lg py-4 bg-white">
-                <p className="px-4 py-2">Sort by</p>
-                {sorts.map((sort) => (
-                  <li
-                    key={sort.label}
-                    className="px-4 py-2 cursor-pointer hover:bg-[#E1DFE1]"
-                    onClick={() => {
-                      setSelectedSort(sort.value);
-                      setShowSortDropdown(false); // close dropdown
-                    }}
-                  >
-                    {sort.label}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <div className="relative" ref={sortDropdown.ref}>
+              <button
+                className="flex items-center gap-2 cursor-pointer"
+                onClick={() =>
+                  //setShowSortDropdown((prev) => !prev)
+                  {
+                    sortDropdown.setIsOpen((prev) => !prev);
+                    priceDropdown.setIsOpen(false);
+                  }
+                }
+              >
+                {selectedSort
+                  ? sorts.find((s) => s.value === selectedSort)?.label
+                  : "Sort by"}{" "}
+                <RiArrowDownSLine size={20} />
+              </button>
+              {/* {showSortDropdown &&  */}
+              {sortDropdown.isOpen && (
+                <ul className="w-[223px] absolute right-0 text-left border border-[#E1DFE1] rounded-lg py-4 bg-white">
+                  <p className="px-4 py-2">Sort by</p>
+                  {sorts.map((sort) => (
+                    <li
+                      key={sort.label}
+                      className="px-4 py-2 cursor-pointer hover:bg-[#E1DFE1]"
+                      onClick={() => {
+                        setSelectedSort(sort.value);
+                        //setShowSortDropdown(false);
+                        sortDropdown.setIsOpen(false);
+                      }}
+                    >
+                      {sort.label}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
         </div>
+        {priceRange.from && priceRange.from && (
+          <button
+            onClick={() =>
+              setPriceRange({
+                from: null,
+                to: null,
+              })
+            }
+            className="flex items-center gap-[6px] border border-[#E1DFE1] rounded-[50px] px-4 py-2 mt-5 cursor-pointer"
+          >
+            <span>
+              Price: {priceRange.from}-{priceRange.to}
+            </span>
+            <IoMdClose size={12} />
+          </button>
+        )}
       </div>
       <div className="grid grid-cols-4 gap-6  mt-8">
         {data?.data?.map((product) => (

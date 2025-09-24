@@ -151,7 +151,9 @@ export default function Registration() {
             )}
           </div>
           <div>
-            <div className="flex items-center border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">
+            <div
+              className={`flex items-center border rounded-lg px-3 py-2.5 ${errors.userName || registerErrored?.errors.username ? "border-[#FF4000]" : "border-[#E1DFE1]"} text-gray-600`}
+            >
               <span className="flex gap-1 mr-2">
                 Username <span className="text-red-500">*</span>
               </span>
@@ -162,18 +164,20 @@ export default function Registration() {
               />
             </div>
             {errors.userName && (
-              <p className="text-left text-[#FF4000]">
+              <p className="text-[10px] text-left text-[#FF4000] mt-1">
                 {errors.userName.message}
               </p>
             )}
             {registerErrored?.errors.username && (
-              <p className="text-left text-[#FF4000]">
+              <p className="text-[10px] text-left text-[#FF4000] mt-1">
                 {registerErrored?.errors.username}
               </p>
             )}
           </div>
           <div>
-            <div className="flex items-center border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">
+            <div
+              className={`flex items-center border rounded-lg px-3 py-2.5 ${errors.email || registerErrored?.errors.email ? "border-[#FF4000]" : "border-[#E1DFE1]"} text-gray-600`}
+            >
               <span className="flex gap-1 mr-2">
                 Email <span className="text-red-500">*</span>
               </span>
@@ -184,11 +188,20 @@ export default function Registration() {
               />
             </div>
             {errors.email && (
-              <p className="text-left text-[#FF4000]">{errors.email.message}</p>
+              <p className="text-[10px] text-left text-[#FF4000] mt-1">
+                {errors.email.message}
+              </p>
+            )}
+            {registerErrored?.errors.email && (
+              <p className="text-[10px] text-left text-[#FF4000] mt-1">
+                {registerErrored?.errors.email}
+              </p>
             )}
           </div>
           <div>
-            <div className="flex items-center border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">
+            <div
+              className={`flex items-center border rounded-lg px-3 py-2.5 ${errors.password || registerErrored?.errors.password ? "border-[#FF4000]" : "border-[#E1DFE1]"} text-gray-600`}
+            >
               <span className="flex gap-1 mr-2">
                 Password <span className="text-red-500">*</span>
               </span>
@@ -218,14 +231,16 @@ export default function Registration() {
               </svg>
             </div>
             {errors.password && (
-              <p className="text-left text-[#FF4000]">
+              <p className="text-[10px] text-left text-[#FF4000] mt-1">
                 {errors.password.message}
               </p>
             )}
           </div>
 
           <div>
-            <div className="flex items-center border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">
+            <div
+              className={`flex items-center border rounded-lg px-3 py-2.5 ${errors.password ? "border-[#FF4000]" : "border-[#E1DFE1]"} text-gray-600`}
+            >
               <span className="flex gap-1 mr-2 shrink-0">
                 Confirm password <span className="text-red-500">*</span>
               </span>
@@ -255,7 +270,7 @@ export default function Registration() {
               </svg>
             </div>
             {errors.confirmPassword && (
-              <p className="text-left text-[#FF4000]">
+              <p className="text-[10px] text-left text-[#FF4000] mt-1">
                 {errors.confirmPassword.message}
               </p>
             )}

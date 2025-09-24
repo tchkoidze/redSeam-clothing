@@ -1,23 +1,23 @@
-// export const validateFile = (file: File, maxSizeKB = 600): string | null => {
-//   const validTypes = [
-//     "image/jpeg",
-//     "image/png",
-//     "image/jpg",
-//     "image/svg",
-//     "image/webp",
-//     "image/jpeg",
-//   ];
+export const validateFile = (file: File, maxSizeKB = 1024): string | null => {
+  // const validTypes = [
+  //   "image/jpeg",
+  //   "image/png",
+  //   "image/jpg",
+  //   "image/svg",
+  //   "image/webp",
+  //   "image/jpeg",
+  // ];
 
-//   if (!validTypes.includes(file.type)) {
-//     return "Only JPG,JPEG, PNG , SVG or WEBP format";
-//   }
+  // if (!validTypes.includes(file.type)) {
+  //   return "Only JPG,JPEG, PNG , SVG or WEBP format";
+  // }
 
-//   // if (file.size > maxSizeKB * 1024) {
-//   //   return `Image size must not exceed ${maxSizeKB}kb`;
-//   // }
+  if (file.size > maxSizeKB * 1024) {
+    return `Image size must not exceed 1 MB`;
+  }
 
-//   return null;
-// };
+  return null;
+};
 
 export const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {

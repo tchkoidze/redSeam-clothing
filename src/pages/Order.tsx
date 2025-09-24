@@ -72,7 +72,9 @@ export default function Order() {
 
           <div className="w-[578px] flex gap-6 mt-8">
             <div>
-              <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600 bg-white">
+              <div
+                className={`flex items-center border rounded-lg px-3 py-2 ${errors.name ? "border-[#FF4000]" : "border-[#E1DFE1]"} text-gray-600 bg-white  mt-1`}
+              >
                 <span className="flex gap-1 mr-2">
                   Name <span className="text-red-500">*</span>
                 </span>
@@ -90,7 +92,9 @@ export default function Order() {
             </div>
 
             <div>
-              <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600 bg-white">
+              <div
+                className={`flex items-center border rounded-lg px-3 py-2 ${errors.surname ? "border-[#FF4000]" : "border-[#E1DFE1]"} text-gray-600 bg-white  mt-1`}
+              >
                 <span className="flex gap-1 mr-2">
                   SurName <span className="text-red-500">*</span>
                 </span>
@@ -109,10 +113,12 @@ export default function Order() {
           </div>
 
           <div className="w-[578px] mt-8">
-            <div className="flex items-center gap-1 border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600 bg-white">
-              <HiOutlineEnvelope size={20} className="shrink-0" />
-              <span className="flex gap-1">
-                Email <span className="text-red-500">*</span>
+            <div
+              className={`flex items-center border rounded-lg px-3 py-2 ${errors.email ? "border-[#FF4000]" : "border-[#E1DFE1]"} text-gray-600 bg-white  mt-1`}
+            >
+              <HiOutlineEnvelope size={20} className="shrink-0 mr-1" />
+              <span className="flex gap-1 mr-2">
+                Mail <span className="text-red-500">*</span>
               </span>
               <input
                 type="text"
@@ -127,7 +133,9 @@ export default function Order() {
 
           <div className="w-[578px] flex gap-6 mt-8">
             <div>
-              <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600 bg-white">
+              <div
+                className={`flex items-center border rounded-lg px-3 py-2 ${errors.address ? "border-[#FF4000]" : "border-[#E1DFE1]"} text-gray-600 bg-white  mt-1`}
+              >
                 <span className="flex gap-1 mr-2">
                   Address <span className="text-red-500">*</span>
                 </span>
@@ -145,7 +153,9 @@ export default function Order() {
             </div>
 
             <div>
-              <div className="flex items-center border rounded-lg px-3 py-2 border-[#E1DFE1] text-gray-600 bg-white">
+              <div
+                className={`flex items-center border rounded-lg px-3 py-2 ${errors.zip_code ? "border-[#FF4000]" : "border-[#E1DFE1]"} text-gray-600 bg-white  mt-1`}
+              >
                 <span className="flex gap-1 mr-2 shrink-0">
                   Zip code <span className="text-red-500">*</span>
                 </span>

@@ -43,7 +43,7 @@ export default function CartSidePanel({
             />
           </button>
         </div>
-        {data ? (
+        {data.length ? (
           <div className="h-[90%] flex flex-col justify-between mt-[63px]">
             <div className="space-y-8 overflow-y-hidden">
               {data.map((product) => (

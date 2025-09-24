@@ -2,12 +2,21 @@ import { HiOutlineEnvelope } from "react-icons/hi2";
 import CartProductCard from "../components/cartProductCard";
 import { useAuth } from "../AuthContext";
 import { useGetCartProducts } from "../hooks/useCartProducts";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { checkoutSchema } from "./checkoutSchema";
 
 export default function Order() {
   const { token } = useAuth();
   //const navigate = useNavigate();
-
   const { data: cartProducts } = useGetCartProducts(token);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(checkoutSchema) });
+
   return (
     <main className="w-[1920px]">
       <h1 className="text-left">Checkout</h1>
@@ -23,13 +32,15 @@ export default function Order() {
                 </span>
                 <input
                   type="text"
-                  // {...register("from")}
+                  {...register("name")}
                   className="w-full outline-none border-none bg-transparent"
                 />
               </div>
-              {/* {errors.from && (
-              <p className="text-left text-[#FF4000]">{errors.from.message}</p>
-            )} */}
+              {errors.name && (
+                <p className="text-left text-[#FF4000]">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -39,13 +50,15 @@ export default function Order() {
                 </span>
                 <input
                   type="text"
-                  // {...register("from")}
+                  {...register("surname")}
                   className="w-full outline-none border-none bg-transparent"
                 />
               </div>
-              {/* {errors.from && (
-              <p className="text-left text-[#FF4000]">{errors.from.message}</p>
-            )} */}
+              {errors.surname && (
+                <p className="text-left text-[#FF4000]">
+                  {errors.surname.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -57,13 +70,13 @@ export default function Order() {
               </span>
               <input
                 type="text"
-                // {...register("from")}
+                {...register("email")}
                 className="w-full outline-none border-none bg-transparent"
               />
             </div>
-            {/* {errors.from && (
-              <p className="text-left text-[#FF4000]">{errors.from.message}</p>
-            )} */}
+            {errors.email && (
+              <p className="text-left text-[#FF4000]">{errors.email.message}</p>
+            )}
           </div>
 
           <div className="w-[578px] flex gap-6 mt-8">
@@ -74,13 +87,15 @@ export default function Order() {
                 </span>
                 <input
                   type="text"
-                  // {...register("from")}
+                  {...register("address")}
                   className="w-full outline-none border-none bg-transparent"
                 />
               </div>
-              {/* {errors.from && (
-              <p className="text-left text-[#FF4000]">{errors.from.message}</p>
-            )} */}
+              {errors.address && (
+                <p className="text-left text-[#FF4000]">
+                  {errors.address.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -90,13 +105,15 @@ export default function Order() {
                 </span>
                 <input
                   type="text"
-                  // {...register("from")}
+                  {...register("zip_code")}
                   className="w-full outline-none border-none bg-transparent"
                 />
               </div>
-              {/* {errors.from && (
-              <p className="text-left text-[#FF4000]">{errors.from.message}</p>
-            )} */}
+              {errors.zip_code && (
+                <p className="text-left text-[#FF4000]">
+                  {errors.zip_code.message}
+                </p>
+              )}
             </div>
           </div>
         </div>

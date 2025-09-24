@@ -11,13 +11,18 @@ import axios from "axios";
 import { useNavigate } from "@tanstack/react-router";
 
 export default function Order() {
+  const { token, logout, user } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(checkoutSchema) });
+  } = useForm({
+    resolver: zodResolver(checkoutSchema),
+    defaultValues: {
+      email: user?.email || "",
+    },
+  });
 
-  const { token, logout } = useAuth();
   const navigate = useNavigate();
   const { data: cartProducts } = useGetCartProducts(token);
 

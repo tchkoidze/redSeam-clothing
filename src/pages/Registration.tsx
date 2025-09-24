@@ -7,11 +7,21 @@ import { registrationSchema, type RegistrationFormData } from "./authSchema";
 import { registration } from "../APIs";
 import axios from "axios";
 import type { RegistrationErrorResponse } from "../types";
+import { useFileUpload } from "../hooks/useImageUpload";
 
 export default function Registration() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [registerErrored, setRegisterErrored] =
     useState<RegistrationErrorResponse | null>(null);
+  // const { image, error, handleFileChange, setImage, setError, dataURLtoFile } =
+  //   useFileUpload();
+  const {
+    image,
+    error: imageError,
+    handleFileChange,
+    setImage,
+    dataURLtoFile,
+  } = useFileUpload();
 
   const {
     register,
@@ -29,10 +39,16 @@ export default function Registration() {
     formData.append("password", data.password);
     formData.append("password_confirmation", data.confirmPassword);
 
+    if (image) {
+      const file = dataURLtoFile(image, "avatar_image");
+      formData.append("avatar", file);
+    }
+
     console.log("form data: ", formData);
 
     try {
       const res = await registration(formData);
+      setImage("");
       navigate({ to: "/login" });
       console.log("respo :", res);
     } catch (error) {
@@ -62,46 +78,77 @@ export default function Registration() {
             <input
               type="file"
               id="myphoto"
-              accept=".jpg,.jpeg,.png"
+              accept="image/*"
+              onChange={handleFileChange}
+              //accept=".jpg,.jpeg,.png"
               //{...register("avatar")}
               // onChange={handleFileChange}
               ref={fileInputRef}
-              //className="hidden"
+              className="hidden"
             />
-            <div className="flex items-center gap-4">
-              <div className="w-[100px] h-[100px] flex justify-center items-center border border-[#E1DFE1] rounded-full">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6 shrink-0"
+            {image ? (
+              <div className="flex items-center gap-4">
+                <img
+                  // src={heroImg}
+                  src={image}
+                  alt="uploaded_avatar"
+                  className="w-[100px] h-[100px] rounded-full"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"
-                  />
-                </svg>
+                  Upload new
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImage("");
+                    if (fileInputRef.current) {
+                      fileInputRef.current.value = "";
+                    }
+                  }}
+                >
+                  Remove
+                </button>
               </div>
-              <button className="cursor-pointer">Upload image</button>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <img
-                src={heroImg}
-                alt="uploaded_avatar"
-                className="w-[100px] h-[100px] rounded-full"
-              />
-              <button>Upload new</button>
-              <button>Remove</button>
-            </div>
+            ) : (
+              <div>
+                <div className="flex items-center gap-4">
+                  <div className="w-[100px] h-[100px] flex justify-center items-center border border-[#E1DFE1] rounded-full">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-6 shrink-0"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"
+                      />
+                    </svg>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="cursor-pointer"
+                  >
+                    Upload image
+                  </button>
+                </div>
+                {imageError && (
+                  <p className="text-[10px] text-[#FF4000]">{imageError}</p>
+                )}
+              </div>
+            )}
           </div>
           <div>
             <div className="flex items-center border rounded-lg px-3 py-2.5 border-[#E1DFE1] text-gray-600">

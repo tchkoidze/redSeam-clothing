@@ -4,23 +4,69 @@ import { useAuth } from "../AuthContext";
 import { useGetCartProducts } from "../hooks/useCartProducts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { checkoutSchema } from "./checkoutSchema";
+import { checkoutSchema, type checkoutFormData } from "./checkoutSchema";
+import { useMutation } from "@tanstack/react-query";
+import { payCart } from "../APIs";
+import axios from "axios";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function Order() {
-  const { token } = useAuth();
-  //const navigate = useNavigate();
-  const { data: cartProducts } = useGetCartProducts(token);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(checkoutSchema) });
 
+  const { token, logout } = useAuth();
+  const navigate = useNavigate();
+  const { data: cartProducts } = useGetCartProducts(token);
+
+  const payCartProductMutation = useMutation({
+    mutationFn: ({ formData }: { formData: any }) => {
+      if (!token) throw new Error("User not authenticated");
+      return payCart(token, formData);
+    },
+
+    onSuccess: () => {
+      navigate({ to: "/listing" });
+    },
+    onError: (error: unknown) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          // alert("You are not authorized. Please login.");
+
+          // setTimeout(() => {
+          //   navigate({ to: "/login" });
+          // }, 1500);
+          logout();
+        } else {
+          console.error("API error:", error.response?.data || error.message);
+        }
+      } else {
+        console.error("Unexpected error:", error);
+      }
+    },
+  });
+
+  const onSubmit = (data: checkoutFormData) => {
+    const formData = new FormData();
+
+    formData.append("name", data.name);
+    formData.append("surname", data.surname);
+    formData.append("email", data.email);
+    formData.append("zip_code", data.zip_code);
+    formData.append("address", data.address);
+
+    payCartProductMutation.mutate({ formData });
+  };
+
   return (
     <main className="w-[1920px]">
       <h1 className="text-left">Checkout</h1>
-      <div className="flex gap-[131px] mt-[42px]">
+      <form
+        onClick={handleSubmit(onSubmit)}
+        className="flex gap-[131px] mt-[42px]"
+      >
         <div className="w-[1129px] h-[635px] bg-[#F8F6F7] rounded-2xl pt-[72px] pl-[47px]">
           <h3 className="text-left">Order details</h3>
 
@@ -140,7 +186,7 @@ export default function Order() {
             Pay
           </button>
         </div>
-      </div>
+      </form>
     </main>
   );
 }

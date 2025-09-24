@@ -5,7 +5,6 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchCartProducts } from "../APIs";
 import { useAuth } from "../AuthContext";
 import type { CartProduct } from "../types";
-import { da } from "zod/v4/locales";
 import { useNavigate } from "@tanstack/react-router";
 
 export default function CartSidePanel({
@@ -45,7 +44,7 @@ export default function CartSidePanel({
         </div>
         {data.length ? (
           <div className="h-[90%] flex flex-col justify-between mt-[63px]">
-            <div className="space-y-8 overflow-y-hidden">
+            <div className="space-y-8 overflow-y-auto">
               {data.map((product) => (
                 <CartProductCard product={product} />
               ))}

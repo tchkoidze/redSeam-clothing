@@ -156,9 +156,32 @@ export const addtoCartProduct = async (
       }
     );
     console.log("add prodact: ", response);
-    return response.data;
+    return response;
   } catch (error) {
-    //console.error("Error registering:", error);
+    throw error;
+  }
+};
+
+export const payCart = async (
+  apiToken: string,
+  //productId: number,
+  formData: any
+) => {
+  try {
+    const response = await axios.post(
+      `https://api.redseam.redberryinternship.ge/api/cart/checkout`, //${productId}
+
+      formData,
+
+      {
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+        },
+      }
+    );
+    console.log("add prodact: ", response);
+    return response;
+  } catch (error) {
     throw error;
   }
 };

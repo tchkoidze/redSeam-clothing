@@ -9,9 +9,10 @@ import { addtoCartProduct, fetchProduct } from "../APIs";
 import { useEffect, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { HiOutlineShoppingCart } from "react-icons/hi2";
-import { useParams } from "@tanstack/react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
 import { toTitleCase } from "../utils/format";
 import { useAuth } from "../AuthContext";
+import axios from "axios";
 
 const colorClassMap: Record<string, string> = {
   Red: "bg-red-700",
@@ -52,6 +53,7 @@ export function Product() {
   const [showQuantityDropdown, setShowQuantityDropdown] = useState(false);
 
   const { productId } = useParams({ from: "/product/$productId" });
+  const navigate = useNavigate();
   console.log("param", productId);
 
   const { data } = useQuery<Product>({
@@ -71,13 +73,23 @@ export function Product() {
       if (!token) throw new Error("User not authenticated");
       return addtoCartProduct(token, productId, product);
     },
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries({ queryKey: ["product", productId] });
-    // },
+
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: ["product", variables.productId],
       });
+      navigate({ to: "/listing" });
+    },
+    onError: (error: unknown) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          navigate({ to: "/login" });
+        } else {
+          console.error("API error:", error.response?.data || error.message);
+        }
+      } else {
+        console.error("Unexpected error:", error);
+      }
     },
   });
 

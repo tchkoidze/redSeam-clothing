@@ -106,7 +106,7 @@ export default function Login() {
             )}
           </div>
           <div className="w-full pt-[22px]">
-            <button className="w-full bg-[#FF4000] text-white text-sm px-8 py-2.5 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">
+            <button className="w-full bg-[#FF4000] text-white text-sm px-8 py-2.5 rounded-lg hover:bg-orange-700 transition cursor-pointer">
               Log in
             </button>
           </div>

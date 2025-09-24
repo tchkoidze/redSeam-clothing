@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { PriceRange } from "./types";
+import type { AddtoCartProduct, PriceRange } from "./types";
 
 export const fetchProducts = async (
   page = 1,
@@ -131,6 +131,31 @@ export const updateCartProduct = async (
       }
     );
     console.log("prodact: ", response);
+    return response.data;
+  } catch (error) {
+    //console.error("Error registering:", error);
+    throw error;
+  }
+};
+
+export const addtoCartProduct = async (
+  apiToken: string,
+  ProductId: number,
+  product: AddtoCartProduct
+) => {
+  try {
+    const response = await axios.post(
+      `https://api.redseam.redberryinternship.ge/api/cart/products/${ProductId}`,
+
+      product,
+
+      {
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+        },
+      }
+    );
+    console.log("add prodact: ", response);
     return response.data;
   } catch (error) {
     //console.error("Error registering:", error);

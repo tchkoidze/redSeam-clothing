@@ -132,3 +132,9 @@ export type CartProduct = {
   color: string;
   size: string;
 };
+
+export type AddtoCartProduct = {
+  quantity: number;
+  color: string;
+  size: string;
+};

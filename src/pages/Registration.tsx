@@ -214,7 +214,7 @@ export default function Registration() {
             )}
           </div>
           <div className="w-full pt-[22px]">
-            <button className="w-full bg-[#FF4000] text-sm text-white px-8 py-2 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">
+            <button className="w-full bg-[#FF4000] text-sm text-white px-8 py-2 rounded-lg hover:bg-orange-700 transition cursor-pointer">
               Register
             </button>
           </div>

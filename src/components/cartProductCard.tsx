@@ -6,7 +6,7 @@ import { useAuth } from "../AuthContext";
 import { toTitleCase } from "../utils/format";
 
 export default function CartProductCard({ product }: { product: CartProduct }) {
-  const { token } = useAuth(); // get token from your auth context
+  const { token } = useAuth();
   const queryClient = useQueryClient();
 
   const deleteProductMutation = useMutation({

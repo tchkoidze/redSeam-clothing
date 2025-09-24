@@ -1,11 +1,17 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import type { Product } from "../types";
-import { fetchProduct } from "../APIs";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import type { AddtoCartProduct, Product } from "../types";
+import { addtoCartProduct, fetchProduct } from "../APIs";
 import { useEffect, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { HiOutlineShoppingCart } from "react-icons/hi2";
 import { useParams } from "@tanstack/react-router";
 import { toTitleCase } from "../utils/format";
+import { useAuth } from "../AuthContext";
 
 const colorClassMap: Record<string, string> = {
   Red: "bg-red-700",
@@ -34,6 +40,8 @@ const colorClassMap: Record<string, string> = {
 };
 
 export function Product() {
+  const queryClient = useQueryClient();
+  const { token } = useAuth();
   //const [quantity, setQuantity] = useState<number>();
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedImg, setSelectedImg] = useState<string>();
@@ -47,10 +55,30 @@ export function Product() {
   console.log("param", productId);
 
   const { data } = useQuery<Product>({
-    // queryKey: ["products", page, priceFrom, priceTo, sort],
-    queryKey: ["product"],
-    queryFn: () => fetchProduct(productId), //{ page, priceFrom, priceTo, sort }
+    queryKey: ["product", productId],
+    queryFn: () => fetchProduct(productId),
     placeholderData: keepPreviousData,
+  });
+
+  const addtoCartProductMutation = useMutation({
+    mutationFn: ({
+      productId,
+      product,
+    }: {
+      productId: number;
+      product: AddtoCartProduct;
+    }) => {
+      if (!token) throw new Error("User not authenticated");
+      return addtoCartProduct(token, productId, product);
+    },
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({ queryKey: ["product", productId] });
+    // },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["product", variables.productId],
+      });
+    },
   });
 
   useEffect(() => {
@@ -60,6 +88,20 @@ export function Product() {
     }
     if (data?.images && data.images.length > 0) setSelectedImg(data.images[0]);
   }, [data]);
+
+  const handleAddtoCart = () => {
+    if (!data?.id || !selectedColor) return;
+    console.log("add to cart");
+    addtoCartProductMutation.mutate({
+      productId: data?.id,
+      product: {
+        quantity: selections.quantity,
+        color: selectedColor,
+        size: selections.size,
+      },
+    });
+  };
+
   return (
     <main className="w-fit">
       <p className="poppins-light text-sm text-left mb-[49px]">
@@ -177,7 +219,10 @@ export function Product() {
               </div>
             </div>
           </div>
-          <button className="w-full flex items-center justify-center gap-2.5 poppins-medium text-lg leading-[27px] text-white bg-[#FF4000] py-4 rounded-lg">
+          <button
+            onClick={() => handleAddtoCart()}
+            className="w-full flex items-center justify-center gap-2.5 poppins-medium text-lg leading-[27px] text-white bg-[#FF4000] hover:bg-orange-700 transition cursor-pointer py-4 rounded-lg"
+          >
             <HiOutlineShoppingCart /> Add to cart
           </button>
           <div className="w-full h-[1px] bg-[#E1DFE1]"></div>

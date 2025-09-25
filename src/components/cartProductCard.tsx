@@ -10,9 +10,15 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
   const queryClient = useQueryClient();
 
   const deleteProductMutation = useMutation({
-    mutationFn: (productId: number) => {
+    mutationFn: ({
+      productId,
+      productFeature,
+    }: {
+      productId: number;
+      productFeature: { color: string; size: string };
+    }) => {
       if (!token) throw new Error("User not authenticated");
-      return deleteCartProduct(token, productId);
+      return deleteCartProduct(token, productId, productFeature);
     },
     onSuccess: () => {
       // refetch cart after deletion
@@ -89,7 +95,12 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
           </div>
           <button
             className="text-[#3E424A] text-xs cursor-pointer"
-            onClick={() => deleteProductMutation.mutate(product.id)}
+            onClick={() =>
+              deleteProductMutation.mutate({
+                productId: product.id,
+                productFeature: { color: product.color, size: product.size },
+              })
+            }
           >
             Remove
           </button>

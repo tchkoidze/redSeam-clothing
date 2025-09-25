@@ -91,7 +91,8 @@ export const fetchCartProducts = async (apiToken: string) => {
 
 export const deleteCartProduct = async (
   apiToken: string,
-  ProductId: number
+  ProductId: number,
+  productFeature: { color: string; size: string }
 ) => {
   try {
     const response = await axios.delete(
@@ -101,6 +102,7 @@ export const deleteCartProduct = async (
         headers: {
           Authorization: `Bearer ${apiToken}`,
         },
+        data: productFeature,
       }
     );
     console.log("prodact: ", response);

@@ -10,11 +10,13 @@ import type { RegistrationErrorResponse } from "../types";
 import { useFileUpload } from "../hooks/useImageUpload";
 
 export default function Registration() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [registerErrored, setRegisterErrored] =
     useState<RegistrationErrorResponse | null>(null);
-  // const { image, error, handleFileChange, setImage, setError, dataURLtoFile } =
-  //   useFileUpload();
+
   const {
     image,
     error: imageError,
@@ -89,7 +91,6 @@ export default function Registration() {
             {image ? (
               <div className="flex items-center gap-4">
                 <img
-                  // src={heroImg}
                   src={image}
                   alt="uploaded_avatar"
                   className="w-[100px] h-[100px] rounded-full"
@@ -206,29 +207,54 @@ export default function Registration() {
                 Password <span className="text-red-500">*</span>
               </span>
               <input
-                type="text"
+                type={showPassword ? "text" : "password"}
                 {...register("password")}
                 className="w-full outline-none border-none bg-transparent"
               />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-5 shrink-0"
+
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="ml-2 cursor-pointer"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                />
-              </svg>
+                {showPassword ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-5 shrink-0"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                ) : (
+                  // 🙈 Eye slash (hidden)
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-5 shrink-0"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12c1.457 4.254 5.52 7.5 10.066 7.5 2.265 0 4.351-.74 6.023-1.979M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.547 0 8.609 3.246 10.066 7.5a10.523 10.523 0 0 1-4.293 5.225M6.228 6.228 3 3m3.228 3.228 3.65 3.65M12 12l9 9"
+                    />
+                  </svg>
+                )}
+              </button>
             </div>
             {errors.password && (
               <p className="text-[10px] text-left text-[#FF4000] mt-1">
@@ -245,29 +271,54 @@ export default function Registration() {
                 Confirm password <span className="text-red-500">*</span>
               </span>
               <input
-                type="text"
+                type={showConfirmPassword ? "text" : "password"}
                 {...register("confirmPassword")}
                 className="w-full outline-none border-none bg-transparent"
               />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-5 shrink-0"
+
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                className="ml-2 cursor-pointer"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                />
-              </svg>
+                {showConfirmPassword ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-5 shrink-0"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                ) : (
+                  // 🙈 Eye slash (hidden)
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-5 shrink-0"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12c1.457 4.254 5.52 7.5 10.066 7.5 2.265 0 4.351-.74 6.023-1.979M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.547 0 8.609 3.246 10.066 7.5a10.523 10.523 0 0 1-4.293 5.225M6.228 6.228 3 3m3.228 3.228 3.65 3.65M12 12l9 9"
+                    />
+                  </svg>
+                )}
+              </button>
             </div>
             {errors.confirmPassword && (
               <p className="text-[10px] text-left text-[#FF4000] mt-1">

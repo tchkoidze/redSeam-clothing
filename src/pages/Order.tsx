@@ -65,11 +65,19 @@ export default function Order() {
     payCartProductMutation.mutate({ formData });
   };
 
+  if (!cartProducts) return null;
+  const subtotal = cartProducts?.reduce(
+    (sum, product) => sum + product.price * product.quantity,
+    0
+  );
+  const delivery = 5;
+  const total = subtotal + delivery;
+
   return (
     <main className="w-[1920px]">
       <h1 className="text-left">Checkout</h1>
       <form
-        onClick={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex gap-[131px] mt-[42px]"
       >
         <div className="w-[1129px] h-[635px] bg-[#F8F6F7] rounded-2xl pt-[72px] pl-[47px]">
@@ -188,16 +196,19 @@ export default function Order() {
           </div>
           <div className="text-base space-y-4 my-[81px]">
             <p className="flex justify-between">
-              Items subtotal <span>$50</span>
+              Items subtotal <span>${subtotal}</span>
             </p>
             <p className="flex justify-between">
-              Delivery <span>$5</span>
+              Delivery <span>${delivery}</span>
             </p>
             <p className="flex justify-between text-xl">
-              Total <span>$55</span>
+              Total <span>${total}</span>
             </p>
           </div>
-          <button className="w-full bg-[#FF4000] text-white px-8 py-4 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer">
+          <button
+            type="submit"
+            className="w-full bg-[#FF4000] text-white px-8 py-4 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer"
+          >
             Pay
           </button>
         </div>

@@ -78,6 +78,7 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
         <div className="flex justify-between mt-[13px]">
           <div className="flex items-center gap-[2px] border border-[#E1DFE1] px-2 py-1 rounded-3xl">
             <button
+              type="button"
               className={`${product.quantity === 1 ? "text-[#E1DFE1]" : "text-[#3E424A]"} cursor-pointer`}
               onClick={handleDecrease}
             >
@@ -87,6 +88,7 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
               {product.quantity}
             </span>
             <button
+              type="button"
               className={`${product.quantity === 10 ? "text-[#E1DFE1]" : "text-[#3E424A]"} cursor-pointer`}
               onClick={handleIncrease}
             >
@@ -94,6 +96,7 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
             </button>
           </div>
           <button
+            type="button"
             className="text-[#3E424A] text-xs cursor-pointer"
             onClick={() =>
               deleteProductMutation.mutate({

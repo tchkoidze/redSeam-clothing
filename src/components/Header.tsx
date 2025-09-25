@@ -1,10 +1,8 @@
 import { HiMiniUser, HiShoppingCart } from "react-icons/hi2";
 import { RiArrowDownSLine } from "react-icons/ri";
 import handEye from "/HandEye.png";
-import { useState } from "react";
-import type { User } from "../types";
 import { useAuth } from "../AuthContext";
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 export default function Header({
   close,
@@ -29,12 +27,12 @@ export default function Header({
 
   return (
     <header className="flex justify-between py-5">
-      <div className="flex items-center gap-1">
+      <Link to="/listing" className="flex items-center gap-1">
         <img src={handEye} alt="hand_eye_logo" />
         <p className="poppins-semibold text-base text-[#10151F]">
           RedSeam Clothing
         </p>
-      </div>
+      </Link>
 
       {token ? (
         <div className="flex items-center gap-5">
@@ -60,7 +58,7 @@ export default function Header({
           onClick={() => {
             navigate({ to: "/login" });
           }}
-          className="flex items-center gap-2 text-[#10151F]"
+          className="flex items-center gap-2 text-[#10151F] cursor-pointer"
         >
           <HiMiniUser size={20} />
           <span className="poppins-medium text-xs">Log in</span>

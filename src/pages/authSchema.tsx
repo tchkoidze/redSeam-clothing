@@ -17,7 +17,7 @@ export type RegistrationFormData = z.infer<typeof registrationSchema>;
 export const loginSchema = z.object({
   email: z
     .string()
-    .min(3, "Email must be at least 3 characters long")
+    .min(1, "Email is required")
     .pipe(z.email("Invalid email format")),
   password: z.string().min(3, "Password must be at least 3 characters long"),
 });

@@ -238,7 +238,6 @@ export default function Registration() {
                     />
                   </svg>
                 ) : (
-                  // 🙈 Eye slash (hidden)
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -302,7 +301,6 @@ export default function Registration() {
                     />
                   </svg>
                 ) : (
-                  // 🙈 Eye slash (hidden)
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

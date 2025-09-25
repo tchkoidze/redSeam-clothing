@@ -188,29 +188,31 @@ export default function Order() {
         </div>
 
         {/* Order's right part */}
-        <div className="w-[460px]">
-          <div className="space-y-8 overflow-y-hidden">
+        <div className="w-[460px] h-[635px] flex flex-col justify-between">
+          <div className="h-[304px] space-y-9 overflow-y-auto">
             {cartProducts?.map((product) => (
               <CartProductCard product={product} />
             ))}
           </div>
-          <div className="text-base space-y-4 my-[81px]">
-            <p className="flex justify-between">
-              Items subtotal <span>${subtotal}</span>
-            </p>
-            <p className="flex justify-between">
-              Delivery <span>${delivery}</span>
-            </p>
-            <p className="flex justify-between text-xl">
-              Total <span>${total}</span>
-            </p>
+          <div>
+            <div className="text-base space-y-4 my-[81px]">
+              <p className="flex justify-between">
+                Items subtotal <span>${subtotal}</span>
+              </p>
+              <p className="flex justify-between">
+                Delivery <span>${delivery}</span>
+              </p>
+              <p className="flex justify-between text-xl">
+                Total <span>${total}</span>
+              </p>
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-[#FF4000] text-white px-8 py-4 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer"
+            >
+              Pay
+            </button>
           </div>
-          <button
-            type="submit"
-            className="w-full bg-[#FF4000] text-white px-8 py-4 rounded-lg font-medium hover:bg-orange-700 transition cursor-pointer"
-          >
-            Pay
-          </button>
         </div>
       </form>
     </main>

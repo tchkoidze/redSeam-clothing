@@ -7,8 +7,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { LoginResponse } from "../types";
 import { useAuth } from "../AuthContext";
+import { useState } from "react";
 
 export default function Login() {
+  const [loginEror, setLoginError] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -32,14 +35,18 @@ export default function Login() {
       localStorage.setItem("auth_token", response.token);
       localStorage.setItem("user_profile", JSON.stringify(response.user));
       setAuth(response.user, response.token);
+      setLoginError("");
       navigate({ to: "/listing" });
 
       console.log("respo :", response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log("API error:", error.response?.data);
+        console.log("API error:", error.response?.status === 401);
+        if (error.response?.status === 401)
+          setLoginError("Incorrect mail or password");
       } else {
         console.log("Unexpected error:", error);
+        setLoginError("Somthing get wrong, tru again");
       }
     }
   };
@@ -105,6 +112,7 @@ export default function Login() {
               </p>
             )}
           </div>
+          {loginEror && <p className="text-left text-[#FF4000]">{loginEror}</p>}
           <div className="w-full pt-[22px]">
             <button className="w-full bg-[#FF4000] text-white text-sm px-8 py-2.5 rounded-lg hover:bg-orange-700 transition cursor-pointer">
               Log in

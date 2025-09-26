@@ -149,7 +149,7 @@ export default function Login() {
             </button>
           </div>
         </form>
-        <div className="flex items-center gap-2 text-sm  mt-6">
+        <div className="w-[554px] flex justify-center items-center gap-2 text-sm  mt-6">
           <p>Not a member?</p>
           <Link
             to={"/registration"}

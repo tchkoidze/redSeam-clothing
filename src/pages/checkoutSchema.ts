@@ -10,7 +10,7 @@ export const checkoutSchema = z.object({
   zip_code: z
     .string()
     .min(2, "The zip code field must be at least 2.")
-    .regex(/^\d+$/, "The zip code field must be a number."),
+    .regex(/^\d+$/, "The zip code field must contain only numbers."),
   address: z
     .string()
     .min(3, "Address field is required, required at least 3 char"),

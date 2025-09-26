@@ -270,7 +270,7 @@ export function Listing() {
         {data?.data?.map((product) => (
           <div key={product.id} className="poppins-medium text-lg">
             <Link
-              to="/product/$productId"
+              to="/listing/$productId"
               params={{ productId: String(product.id) }}
             >
               <img

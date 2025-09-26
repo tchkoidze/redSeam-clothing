@@ -52,7 +52,7 @@ export function Product() {
   });
   const [showQuantityDropdown, setShowQuantityDropdown] = useState(false);
 
-  const { productId } = useParams({ from: "/product/$productId" });
+  const { productId } = useParams({ from: "/listing/$productId" });
   const navigate = useNavigate();
   console.log("param", productId);
 

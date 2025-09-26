@@ -330,7 +330,7 @@ export default function Registration() {
             </button>
           </div>
         </form>
-        <div className="flex items-center text-sm gap-2 mt-6">
+        <div className="w-[554px] flex justify-center items-center text-sm gap-2 mt-6">
           <p>Already member?</p>
           <Link
             to={"/login"}

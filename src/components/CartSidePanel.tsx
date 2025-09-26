@@ -46,7 +46,7 @@ export default function CartSidePanel({
           <div className="h-[90%] flex flex-col justify-between mt-[63px]">
             <div className="space-y-8 overflow-y-auto">
               {data.map((product) => (
-                <CartProductCard product={product} />
+                <CartProductCard key={product.id} product={product} />
               ))}
             </div>
 

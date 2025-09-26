@@ -8,7 +8,7 @@ import { checkoutSchema, type checkoutFormData } from "./checkoutSchema";
 import { useMutation } from "@tanstack/react-query";
 import { payCart } from "../APIs";
 import axios from "axios";
-import { useNavigate } from "@tanstack/react-router";
+//import { useNavigate } from "@tanstack/react-router";
 import Congrats from "../components/CongratsMOdal";
 import { useState } from "react";
 
@@ -16,7 +16,7 @@ export default function Order() {
   const [showCongratsModal, setShowCongratsModal] = useState(false);
 
   const { token, logout, user } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { data: cartProducts } = useGetCartProducts(token);
   const {
     register,
@@ -195,7 +195,7 @@ export default function Order() {
         <div className="w-[460px] h-[635px] flex flex-col justify-between">
           <div className="h-[304px] space-y-9 overflow-y-auto">
             {cartProducts?.map((product) => (
-              <CartProductCard product={product} />
+              <CartProductCard key={product.id} product={product} />
             ))}
           </div>
           <div>

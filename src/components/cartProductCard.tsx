@@ -62,7 +62,7 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
   };
 
   return (
-    <div key={product.id} className="flex items-center gap-4">
+    <div className="flex items-center gap-4">
       <img
         src={product.cover_image}
         alt="product_img"

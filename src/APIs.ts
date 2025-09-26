@@ -8,7 +8,7 @@ export const fetchProducts = async (
 ) => {
   try {
     const response = await axios.get(
-      `https://api.redseam.redberryinternship.ge/api/products`, //?page=${page}&filter[price_from]=100&filter[price_to]=500&sort=price
+      `https://api.redseam.redberryinternship.ge/api/products`,
       {
         params: {
           page,
@@ -27,6 +27,7 @@ export const fetchProducts = async (
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
+    throw error;
   }
 };
 

@@ -64,11 +64,11 @@ export default function Registration() {
   };
 
   return (
-    <main className="grid grid-cols-2 items-center">
+    <main className="grid grid-cols-[948px_1fr] items-center">
       <div>
         <img src={heroImg} alt="loging_hero_img" />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col ml-[173px]">
         <p className="w-[554px] poppins-semibold text-[42px] leading-[63px] text-[#10151F] text-start mb-12">
           Registration
         </p>

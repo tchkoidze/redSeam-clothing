@@ -160,6 +160,7 @@ export const addtoCartProduct = async (
     console.log("add prodact: ", response);
     return response;
   } catch (error) {
+    console.log("err: errr", error);
     throw error;
   }
 };

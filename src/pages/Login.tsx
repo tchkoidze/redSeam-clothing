@@ -53,11 +53,11 @@ export default function Login() {
   };
 
   return (
-    <main className="grid grid-cols-2 items-center">
+    <main className="grid grid-cols-[948px_1fr] items-center">
       <div>
         <img src={heroImg} alt="loging_hero_img" />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col ml-[173px]">
         <p className="w-[554px] poppins-semibold text-[42px] leading-[63px] text-[#10151F] text-start mb-12">
           Log in
         </p>
@@ -89,7 +89,7 @@ export default function Login() {
                 Password <span className="text-red-500">*</span>
               </span>
               <input
-                type="text"
+                type={showPassword ? "text" : "password"}
                 {...register("password")}
                 className="w-full outline-none border-none bg-transparent"
               />

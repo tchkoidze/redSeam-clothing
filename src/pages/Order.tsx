@@ -9,9 +9,15 @@ import { useMutation } from "@tanstack/react-query";
 import { payCart } from "../APIs";
 import axios from "axios";
 import { useNavigate } from "@tanstack/react-router";
+import Congrats from "../components/CongratsMOdal";
+import { useState } from "react";
 
 export default function Order() {
+  const [showCongratsModal, setShowCongratsModal] = useState(false);
+
   const { token, logout, user } = useAuth();
+  const navigate = useNavigate();
+  const { data: cartProducts } = useGetCartProducts(token);
   const {
     register,
     handleSubmit,
@@ -23,9 +29,6 @@ export default function Order() {
     },
   });
 
-  const navigate = useNavigate();
-  const { data: cartProducts } = useGetCartProducts(token);
-
   const payCartProductMutation = useMutation({
     mutationFn: ({ formData }: { formData: any }) => {
       if (!token) throw new Error("User not authenticated");
@@ -33,7 +36,8 @@ export default function Order() {
     },
 
     onSuccess: () => {
-      navigate({ to: "/listing" });
+      setShowCongratsModal(true);
+      //navigate({ to: "/listing" });
     },
     onError: (error: unknown) => {
       if (axios.isAxiosError(error)) {
@@ -75,10 +79,10 @@ export default function Order() {
 
   return (
     <main className="w-[1920px]">
-      <h1 className="text-left">Checkout</h1>
+      <h1 className="text-left px-[100px] mt-[72px]">Checkout</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex gap-[131px] mt-[42px]"
+        className="flex justify-center gap-[131px] mt-[42px]"
       >
         <div className="w-[1129px] h-[635px] bg-[#F8F6F7] rounded-2xl pt-[72px] pl-[47px]">
           <h3 className="text-left">Order details</h3>
@@ -215,6 +219,9 @@ export default function Order() {
           </div>
         </div>
       </form>
+      {showCongratsModal && (
+        <Congrats setShowCongratsModal={setShowCongratsModal} />
+      )}
     </main>
   );
 }

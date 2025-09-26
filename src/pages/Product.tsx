@@ -83,12 +83,15 @@ export function Product() {
     onError: (error: unknown) => {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
+          console.log(error.response?.status);
           navigate({ to: "/login" });
         } else {
           console.error("API error:", error.response?.data || error.message);
+          navigate({ to: "/login" });
         }
       } else {
         console.error("Unexpected error:", error);
+        navigate({ to: "/login" });
       }
     },
   });
@@ -115,8 +118,8 @@ export function Product() {
   };
 
   return (
-    <main className="w-fit">
-      <p className="poppins-light text-sm text-left mb-[49px]">
+    <main className="flex flex-col items-center mb-[110px]">
+      <p className="w-[1920px] poppins-light text-sm text-left px-[100px] mb-[49px]">
         listing / product
       </p>
       <div className="flex gap-[168px]">

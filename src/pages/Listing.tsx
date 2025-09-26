@@ -178,7 +178,7 @@ export function Listing() {
   return (
     <main>
       <div>
-        <div className="flex justify-between">
+        <div className="flex justify-between px-[100px]">
           <p className="poppins-semibold text-[42px] leading-[63px] text-[#10151F]">
             Products
           </p>
@@ -266,7 +266,7 @@ export function Listing() {
           </button>
         )}
       </div>
-      <div className="grid grid-cols-4 gap-6  mt-8">
+      <div className="grid grid-cols-[repeat(4,412px)] justify-center gap-6 mt-8">
         {data?.data?.map((product) => (
           <div key={product.id} className="poppins-medium text-lg">
             <Link

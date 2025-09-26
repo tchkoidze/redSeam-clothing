@@ -6,10 +6,5 @@ export const Route = createFileRoute("/product/$productId")({
 });
 
 function RouteComponent() {
-  return (
-    <div>
-      Hello "/product/$productId"!
-      <Product />
-    </div>
-  );
+  return <Product />;
 }

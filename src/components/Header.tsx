@@ -26,7 +26,7 @@ export default function Header({
   };
 
   return (
-    <header className="flex justify-between py-5">
+    <header className="h-20 flex justify-between items-center px-[100px] py-5">
       <Link to="/listing" className="flex items-center gap-1">
         <img src={handEye} alt="hand_eye_logo" />
         <p className="poppins-semibold text-base text-[#10151F]">

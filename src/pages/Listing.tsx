@@ -53,8 +53,8 @@ export function Listing() {
 
   return (
     <main className="mb-[216px]">
-      <div>
-        <div className="flex justify-between px-[100px]">
+      <div className="grid grid-cols-1 px-[100px]">
+        <div className="flex justify-between">
           <p className="poppins-semibold text-[42px] leading-[63px] text-[#10151F]">
             Products
           </p>
@@ -132,7 +132,7 @@ export function Listing() {
                 to: null,
               })
             }
-            className="flex items-center gap-[6px] border border-[#E1DFE1] rounded-[50px] px-4 py-2 mt-5 cursor-pointer"
+            className="w-fit flex items-center gap-[6px] border border-[#E1DFE1] rounded-[50px] px-4 py-2 mt-5 cursor-pointer"
           >
             <span>
               Price: {priceRange.from}-{priceRange.to}

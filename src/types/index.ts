@@ -31,12 +31,11 @@ export type Product = {
   size: string;
 };
 
-// Single product item (matches one object inside `data[]`)
 export interface ProductItem {
   id: number;
   name: string;
   description: string | null;
-  release_year: string; // API returns a string like "2011"
+  release_year: string;
   cover_image: string;
   images: string[];
   price: number;

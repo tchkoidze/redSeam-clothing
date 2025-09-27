@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
 interface PaginationProps {
@@ -48,7 +47,7 @@ export function Pagination({
   }, [currentPage, lastPage]);
 
   return (
-    <div className="flex items-center justify-center gap-2 mt-8">
+    <div className="flex items-center justify-center gap-2 mt-[90px]">
       <button
         className="cursor-pointer"
         onClick={() => onPageChange(currentPage - 1)}

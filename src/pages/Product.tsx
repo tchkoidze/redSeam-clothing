@@ -43,7 +43,6 @@ const colorClassMap: Record<string, string> = {
 export function Product() {
   const queryClient = useQueryClient();
   const { token } = useAuth();
-  //const [quantity, setQuantity] = useState<number>();
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedImg, setSelectedImg] = useState<string>();
   const [selections, setSelections] = useState({
@@ -97,11 +96,18 @@ export function Product() {
   });
 
   useEffect(() => {
-    //setQuantity(data?.quantity);
     if (data?.available_colors && data.available_colors.length > 0) {
       setSelectedColor(data.available_colors[0]);
     }
     if (data?.images && data.images.length > 0) setSelectedImg(data.images[0]);
+
+    const sizes = data?.available_sizes;
+    if (sizes && sizes.length > 0) {
+      setSelections((prev) => ({
+        ...prev,
+        size: sizes[0],
+      }));
+    }
   }, [data]);
 
   const handleAddtoCart = () => {
@@ -116,6 +122,12 @@ export function Product() {
       },
     });
   };
+
+  const isAddToCartDisabled =
+    !selectedColor ||
+    !selections.size ||
+    !(data?.available_colors?.length ?? 0 > 0) ||
+    !(data?.available_sizes?.length ?? 0 > 0);
 
   return (
     <main className="flex flex-col items-center mb-[110px]">
@@ -134,7 +146,6 @@ export function Product() {
                 }`}
                 onClick={() => {
                   setSelectedImg(img);
-                  // select the corresponding color
                   if (data?.available_colors && data.available_colors[index]) {
                     setSelectedColor(data.available_colors[index]);
                   }
@@ -155,46 +166,56 @@ export function Product() {
           </div>
 
           <div className="space-y-12">
-            <div>
-              <p className="text-left mb-4">Color: {selectedColor}</p>
-              <div className="flex flex-nowrap gap-[18px]">
-                {data?.available_colors?.map((color, index) => (
-                  <div
-                    key={color}
-                    onClick={() => {
-                      setSelectedColor(color);
-                      setSelectedImg(data.images[index]);
-                    }}
-                    className={`w-[38px] h-[38px] shrink-0 rounded-full cursor-pointer ${
-                      colorClassMap[color]
-                    } ${
-                      selectedColor === color
-                        ? "outline outline-[#E1DFE1] outline-offset-4  "
-                        : "outline-none"
-                    }`}
-                  ></div>
-                ))}
+            {data?.available_colors && data.available_colors.length > 0 ? (
+              <div>
+                <p className="text-left mb-4">Color: {selectedColor}</p>
+                <div className="flex flex-nowrap gap-[18px]">
+                  {data.available_colors.map((color, index) => (
+                    <div
+                      key={color}
+                      onClick={() => {
+                        setSelectedColor(color);
+                        setSelectedImg(data.images[index]);
+                      }}
+                      className={`w-[38px] h-[38px] shrink-0 rounded-full cursor-pointer ${
+                        colorClassMap[color]
+                      } ${
+                        selectedColor === color
+                          ? "outline outline-[#E1DFE1] outline-offset-4"
+                          : "outline-none"
+                      }`}
+                    ></div>
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : (
+              <p className="text-left mb-4">Color: Not available</p>
+            )}
 
-            <div>
-              <p className="text-left mb-4">Size: {selections.size} </p>
-              <div className="flex gap-2">
-                {data?.available_sizes?.map((size) => (
-                  <div
-                    key={size}
-                    onClick={() => setSelections((prev) => ({ ...prev, size }))}
-                    className={`w-[70px] border py-[9px] rounded-lg cursor-pointer ${
-                      size === selections.size
-                        ? "border-[#10151F]"
-                        : "border-[#E1DFE1]"
-                    }`}
-                  >
-                    {size}
-                  </div>
-                ))}
+            {data?.available_sizes && data.available_sizes.length > 0 ? (
+              <div>
+                <p className="text-left mb-4">Size: {selections.size}</p>
+                <div className="flex gap-2">
+                  {data.available_sizes.map((size) => (
+                    <div
+                      key={size}
+                      onClick={() =>
+                        setSelections((prev) => ({ ...prev, size }))
+                      }
+                      className={`w-[70px] border py-[9px] rounded-lg cursor-pointer ${
+                        size === selections.size
+                          ? "border-[#10151F]"
+                          : "border-[#E1DFE1]"
+                      }`}
+                    >
+                      {size}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : (
+              <p className="text-left mb-4">Size: Not available</p>
+            )}
 
             <div>
               <p className="text-left mb-4">Quantity</p>
@@ -234,9 +255,15 @@ export function Product() {
               </div>
             </div>
           </div>
+          {isAddToCartDisabled && (
+            <p className="text-[10px] text-left text-[#FF4000] curs">
+              Not available, selecte another
+            </p>
+          )}
           <button
+            disabled={isAddToCartDisabled}
             onClick={() => handleAddtoCart()}
-            className="w-full flex items-center justify-center gap-2.5 poppins-medium text-lg leading-[27px] text-white bg-[#FF4000] hover:bg-orange-700 transition cursor-pointer py-4 rounded-lg"
+            className={`w-full flex items-center justify-center gap-2.5 poppins-medium text-lg leading-[27px] text-white bg-[#FF4000] hover:bg-orange-700 transition ${isAddToCartDisabled ? "cursor-not-allowed" : "cursor-pointer"}  py-4 rounded-lg`}
           >
             <HiOutlineShoppingCart /> Add to cart
           </button>

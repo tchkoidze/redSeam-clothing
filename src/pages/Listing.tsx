@@ -38,10 +38,7 @@ export function Listing() {
     placeholderData: keepPreviousData,
   });
 
-  //const totalPages = data?.meta.last_page ?? 1;
-
   if (isFetching) {
-    // return <div className="h-9">Data is fetching from the api</div>;
     return <ListingProductSkeleton />;
   }
 

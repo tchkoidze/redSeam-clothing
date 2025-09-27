@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "@tanstack/react-router";
 import { toTitleCase } from "../utils/format";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
+import ProductDetailsSkeleton from "../components/ProductDetailsSkeleton";
 
 const colorClassMap: Record<string, string> = {
   Red: "bg-red-700",
@@ -47,7 +48,7 @@ export function Product() {
   const [selectedImg, setSelectedImg] = useState<string>();
   const [selections, setSelections] = useState({
     quantity: 1,
-    size: "L",
+    size: "",
   });
   const [showQuantityDropdown, setShowQuantityDropdown] = useState(false);
 
@@ -55,7 +56,7 @@ export function Product() {
   const navigate = useNavigate();
   console.log("param", productId);
 
-  const { data } = useQuery<Product>({
+  const { data, isFetching, error } = useQuery<Product>({
     queryKey: ["product", productId],
     queryFn: () => fetchProduct(productId),
     placeholderData: keepPreviousData,
@@ -128,6 +129,14 @@ export function Product() {
     !selections.size ||
     !(data?.available_colors?.length ?? 0 > 0) ||
     !(data?.available_sizes?.length ?? 0 > 0);
+
+  if (isFetching) {
+    return <ProductDetailsSkeleton />;
+  }
+
+  if (error) {
+    return <div className="h-9">Error happened</div>;
+  }
 
   return (
     <main className="flex flex-col items-center mb-[110px]">

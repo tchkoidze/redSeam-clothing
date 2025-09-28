@@ -55,10 +55,27 @@ export default function Registration() {
       console.log("respo :", res);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log("API error:", error.response?.data);
-        setRegisterErrored(error.response?.data);
+        if (error.response?.data) {
+          setRegisterErrored(error.response?.data);
+          console.error("Unexpected error:", error);
+        } else if (error.request) {
+          setRegisterErrored({
+            message: "No response from server. Please try again.",
+            errors: {},
+          });
+        } else {
+          console.error("Unexpected error:", error);
+          setRegisterErrored({
+            message: error.message || "Unexpected Axios error",
+            errors: {},
+          });
+        }
       } else {
-        console.log("Unexpected error:", error);
+        console.error("Unexpected error:", error);
+        setRegisterErrored({
+          message: "Something went wrong",
+          errors: {},
+        });
       }
     }
   };

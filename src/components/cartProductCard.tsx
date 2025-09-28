@@ -38,7 +38,6 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
       return updateCartProduct(token, productId, quantity);
     },
     onSuccess: () => {
-      // refetch cart after deletion
       queryClient.invalidateQueries({ queryKey: ["cartProducts"] });
     },
   });
@@ -53,12 +52,10 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
   };
 
   const handleIncrease = () => {
-    if (product.quantity < 10) {
-      updateProductMutation.mutate({
-        productId: product.id,
-        quantity: product.quantity + 1,
-      });
-    }
+    updateProductMutation.mutate({
+      productId: product.id,
+      quantity: product.quantity + 1,
+    });
   };
 
   return (
@@ -89,7 +86,7 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
             </span>
             <button
               type="button"
-              className={`${product.quantity === 10 ? "text-[#E1DFE1]" : "text-[#3E424A]"} cursor-pointer`}
+              className="text-[#3E424A] cursor-pointer"
               onClick={handleIncrease}
             >
               <FiPlus />

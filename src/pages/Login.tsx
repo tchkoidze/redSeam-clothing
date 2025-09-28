@@ -47,7 +47,7 @@ export default function Login() {
           setLoginError("Incorrect mail or password");
       } else {
         console.log("Unexpected error:", error);
-        setLoginError("Somthing get wrong, tru again");
+        setLoginError("Somthing get wrong, try again");
       }
     }
   };

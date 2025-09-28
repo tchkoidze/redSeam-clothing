@@ -40,12 +40,13 @@ export default function Header({
             <HiShoppingCart size={24} />
           </button>
 
-          {/* <p className="w-10 h-10 flex justify-center items-center bg-red-300 text-white text-center text rounded-full my-auto">
-          <span> K</span>
-        </p> */}
           <button className="flex items-center gap-1 cursor-pointer">
             {user?.avatar ? (
-              <img src={user.avatar} alt="avatar" />
+              <img
+                src={user.avatar}
+                alt="avatar"
+                className="w-10 h-10 rounded-full object-cover object-center"
+              />
             ) : (
               <HiMiniUser size={40} />
             )}
